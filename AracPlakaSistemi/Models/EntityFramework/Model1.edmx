@@ -1,0 +1,381 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="AracPlakaSistemiModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="GirisKapilari">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="camera_adres" Type="nvarchar" MaxLength="50" />
+          <Property Name="camera_ip" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="GirisYapanAraclar">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="tc_no" Type="nvarchar" MaxLength="11" Nullable="false" />
+          <Property Name="kapi_id" Type="int" />
+          <Property Name="plaka" Type="nvarchar" MaxLength="15" Nullable="false" />
+          <Property Name="date" Type="date" Nullable="false" />
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+        </EntityType>
+        <EntityType Name="KaraListeAraclar">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="tc_no" Type="nvarchar" MaxLength="11" Nullable="false" />
+          <Property Name="plaka" Type="nvarchar" MaxLength="15" Nullable="false" />
+          <Property Name="arac_marka" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="date" Type="date" Nullable="false" />
+          <Property Name="Ad" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Soyad" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="KayitliAraclar">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="plaka" Type="nvarchar" MaxLength="15" Nullable="false" />
+          <Property Name="marka" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="model" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="ad_soyad" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="tc_no" Type="nvarchar" MaxLength="11" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Kisi">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Ad" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Soyad" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="tc_no" Type="nvarchar" MaxLength="11" Nullable="false" />
+          <Property Name="plaka" Type="nvarchar" MaxLength="15" Nullable="false" />
+          <Property Name="isPersonal" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Kullanici">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="KullaniciAd" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Sifre" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Role" Type="nvarchar" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="MisafirAraclar">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="tc_no" Type="nvarchar" MaxLength="11" Nullable="false" />
+          <Property Name="plaka" Type="nvarchar" MaxLength="15" Nullable="false" />
+          <Property Name="arac_marka" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="date" Type="date" Nullable="false" />
+          <Property Name="Ad" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Soyad" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PlakaGorsel">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PlakaId" Type="int" />
+          <Property Name="PathName" Type="nvarchar(max)" />
+        </EntityType>
+        <Association Name="FK_GirisYapanAraclar_GirisKapilari">
+          <End Role="GirisKapilari" Type="Self.GirisKapilari" Multiplicity="0..1" />
+          <End Role="GirisYapanAraclar" Type="Self.GirisYapanAraclar" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="GirisKapilari">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="GirisYapanAraclar">
+              <PropertyRef Name="kapi_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PlakaGorsel_KayitliAraclar">
+          <End Role="KayitliAraclar" Type="Self.KayitliAraclar" Multiplicity="0..1" />
+          <End Role="PlakaGorsel" Type="Self.PlakaGorsel" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="KayitliAraclar">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PlakaGorsel">
+              <PropertyRef Name="PlakaId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="AracPlakaSistemiModelStoreContainer">
+          <EntitySet Name="GirisKapilari" EntityType="Self.GirisKapilari" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="GirisYapanAraclar" EntityType="Self.GirisYapanAraclar" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="KaraListeAraclar" EntityType="Self.KaraListeAraclar" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="KayitliAraclar" EntityType="Self.KayitliAraclar" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Kisi" EntityType="Self.Kisi" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Kullanici" EntityType="Self.Kullanici" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MisafirAraclar" EntityType="Self.MisafirAraclar" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PlakaGorsel" EntityType="Self.PlakaGorsel" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_GirisYapanAraclar_GirisKapilari" Association="Self.FK_GirisYapanAraclar_GirisKapilari">
+            <End Role="GirisKapilari" EntitySet="GirisKapilari" />
+            <End Role="GirisYapanAraclar" EntitySet="GirisYapanAraclar" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PlakaGorsel_KayitliAraclar" Association="Self.FK_PlakaGorsel_KayitliAraclar">
+            <End Role="KayitliAraclar" EntitySet="KayitliAraclar" />
+            <End Role="PlakaGorsel" EntitySet="PlakaGorsel" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="AracPlakaSistemiModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="GirisKapilari">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="camera_adres" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="camera_ip" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="GirisYapanAraclar" Relationship="Self.FK_GirisYapanAraclar_GirisKapilari" FromRole="GirisKapilari" ToRole="GirisYapanAraclar" />
+        </EntityType>
+        <EntityType Name="GirisYapanAraclar">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="tc_no" Type="String" MaxLength="11" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="kapi_id" Type="Int32" />
+          <Property Name="plaka" Type="String" MaxLength="15" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="date" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="GirisKapilari" Relationship="Self.FK_GirisYapanAraclar_GirisKapilari" FromRole="GirisYapanAraclar" ToRole="GirisKapilari" />
+        </EntityType>
+        <EntityType Name="KaraListeAraclar">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="tc_no" Type="String" MaxLength="11" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="plaka" Type="String" MaxLength="15" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="arac_marka" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="date" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Ad" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Soyad" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+        </EntityType>
+        <EntityType Name="KayitliAraclar">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="plaka" Type="String" MaxLength="15" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="marka" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="model" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ad_soyad" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="tc_no" Type="String" MaxLength="11" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="PlakaGorsel" Relationship="Self.FK_PlakaGorsel_KayitliAraclar" FromRole="KayitliAraclar" ToRole="PlakaGorsel" />
+        </EntityType>
+        <EntityType Name="Kisi">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Ad" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Soyad" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="tc_no" Type="String" MaxLength="11" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="plaka" Type="String" MaxLength="15" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="isPersonal" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Kullanici">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="KullaniciAd" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Sifre" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Role" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="MisafirAraclar">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="tc_no" Type="String" MaxLength="11" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="plaka" Type="String" MaxLength="15" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="arac_marka" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="date" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Ad" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Soyad" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PlakaGorsel">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PlakaId" Type="Int32" />
+          <Property Name="PathName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="KayitliAraclar" Relationship="Self.FK_PlakaGorsel_KayitliAraclar" FromRole="PlakaGorsel" ToRole="KayitliAraclar" />
+        </EntityType>
+        <Association Name="FK_GirisYapanAraclar_GirisKapilari">
+          <End Role="GirisKapilari" Type="Self.GirisKapilari" Multiplicity="0..1" />
+          <End Role="GirisYapanAraclar" Type="Self.GirisYapanAraclar" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="GirisKapilari">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="GirisYapanAraclar">
+              <PropertyRef Name="kapi_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PlakaGorsel_KayitliAraclar">
+          <End Role="KayitliAraclar" Type="Self.KayitliAraclar" Multiplicity="0..1" />
+          <End Role="PlakaGorsel" Type="Self.PlakaGorsel" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="KayitliAraclar">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PlakaGorsel">
+              <PropertyRef Name="PlakaId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="AracPlakaSistemiEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="GirisKapilari" EntityType="Self.GirisKapilari" />
+          <EntitySet Name="GirisYapanAraclar" EntityType="Self.GirisYapanAraclar" />
+          <EntitySet Name="KaraListeAraclar" EntityType="Self.KaraListeAraclar" />
+          <EntitySet Name="KayitliAraclar" EntityType="Self.KayitliAraclar" />
+          <EntitySet Name="Kisi" EntityType="Self.Kisi" />
+          <EntitySet Name="Kullanici" EntityType="Self.Kullanici" />
+          <EntitySet Name="MisafirAraclar" EntityType="Self.MisafirAraclar" />
+          <EntitySet Name="PlakaGorsel" EntityType="Self.PlakaGorsel" />
+          <AssociationSet Name="FK_GirisYapanAraclar_GirisKapilari" Association="Self.FK_GirisYapanAraclar_GirisKapilari">
+            <End Role="GirisKapilari" EntitySet="GirisKapilari" />
+            <End Role="GirisYapanAraclar" EntitySet="GirisYapanAraclar" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PlakaGorsel_KayitliAraclar" Association="Self.FK_PlakaGorsel_KayitliAraclar">
+            <End Role="KayitliAraclar" EntitySet="KayitliAraclar" />
+            <End Role="PlakaGorsel" EntitySet="PlakaGorsel" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="AracPlakaSistemiModelStoreContainer" CdmEntityContainer="AracPlakaSistemiEntities">
+          <EntitySetMapping Name="GirisKapilari">
+            <EntityTypeMapping TypeName="AracPlakaSistemiModel.GirisKapilari">
+              <MappingFragment StoreEntitySet="GirisKapilari">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="camera_adres" ColumnName="camera_adres" />
+                <ScalarProperty Name="camera_ip" ColumnName="camera_ip" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="GirisYapanAraclar">
+            <EntityTypeMapping TypeName="AracPlakaSistemiModel.GirisYapanAraclar">
+              <MappingFragment StoreEntitySet="GirisYapanAraclar">
+                <ScalarProperty Name="tc_no" ColumnName="tc_no" />
+                <ScalarProperty Name="kapi_id" ColumnName="kapi_id" />
+                <ScalarProperty Name="plaka" ColumnName="plaka" />
+                <ScalarProperty Name="date" ColumnName="date" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="KaraListeAraclar">
+            <EntityTypeMapping TypeName="AracPlakaSistemiModel.KaraListeAraclar">
+              <MappingFragment StoreEntitySet="KaraListeAraclar">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="tc_no" ColumnName="tc_no" />
+                <ScalarProperty Name="plaka" ColumnName="plaka" />
+                <ScalarProperty Name="arac_marka" ColumnName="arac_marka" />
+                <ScalarProperty Name="date" ColumnName="date" />
+                <ScalarProperty Name="Ad" ColumnName="Ad" />
+                <ScalarProperty Name="Soyad" ColumnName="Soyad" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="KayitliAraclar">
+            <EntityTypeMapping TypeName="AracPlakaSistemiModel.KayitliAraclar">
+              <MappingFragment StoreEntitySet="KayitliAraclar">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="plaka" ColumnName="plaka" />
+                <ScalarProperty Name="marka" ColumnName="marka" />
+                <ScalarProperty Name="model" ColumnName="model" />
+                <ScalarProperty Name="ad_soyad" ColumnName="ad_soyad" />
+                <ScalarProperty Name="tc_no" ColumnName="tc_no" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Kisi">
+            <EntityTypeMapping TypeName="AracPlakaSistemiModel.Kisi">
+              <MappingFragment StoreEntitySet="Kisi">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Ad" ColumnName="Ad" />
+                <ScalarProperty Name="Soyad" ColumnName="Soyad" />
+                <ScalarProperty Name="tc_no" ColumnName="tc_no" />
+                <ScalarProperty Name="plaka" ColumnName="plaka" />
+                <ScalarProperty Name="isPersonal" ColumnName="isPersonal" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Kullanici">
+            <EntityTypeMapping TypeName="AracPlakaSistemiModel.Kullanici">
+              <MappingFragment StoreEntitySet="Kullanici">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="KullaniciAd" ColumnName="KullaniciAd" />
+                <ScalarProperty Name="Sifre" ColumnName="Sifre" />
+                <ScalarProperty Name="Role" ColumnName="Role" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MisafirAraclar">
+            <EntityTypeMapping TypeName="AracPlakaSistemiModel.MisafirAraclar">
+              <MappingFragment StoreEntitySet="MisafirAraclar">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="tc_no" ColumnName="tc_no" />
+                <ScalarProperty Name="plaka" ColumnName="plaka" />
+                <ScalarProperty Name="arac_marka" ColumnName="arac_marka" />
+                <ScalarProperty Name="date" ColumnName="date" />
+                <ScalarProperty Name="Ad" ColumnName="Ad" />
+                <ScalarProperty Name="Soyad" ColumnName="Soyad" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PlakaGorsel">
+            <EntityTypeMapping TypeName="AracPlakaSistemiModel.PlakaGorsel">
+              <MappingFragment StoreEntitySet="PlakaGorsel">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="PlakaId" ColumnName="PlakaId" />
+                <ScalarProperty Name="PathName" ColumnName="PathName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
