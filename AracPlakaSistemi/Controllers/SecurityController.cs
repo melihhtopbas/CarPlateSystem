@@ -30,7 +30,7 @@ namespace AracPlakaSistemi.Controllers
             else
             {
                 ViewBag.Mesaj = " gecersiz";
-                return View(Login());
+                return View();
             }
         }
     }

@@ -16,7 +16,7 @@
         <h2> LÜTFEN GİRİŞ YAPINIZ</h2>
 
 
-        <form>
+         
             <!-- Email input -->
             @using (Html.BeginForm("Login", "Security", FormMethod.Post))
             {
@@ -31,6 +31,9 @@
                     @Html.LabelFor(m => m.Sifre)
                     @Html.TextBoxFor(m => m.Sifre, new { @class = "form-control", PlaceHolder = "sifre" })
 
+                </div>
+                <div>
+                    <p>@ViewBag.Mesaj</p>
                 </div>
 
                 <!-- 2 column grid layout for inline styling -->
@@ -80,6 +83,6 @@
             }
 
 </center>
-    </form>
+  
 </body>
 </html>
