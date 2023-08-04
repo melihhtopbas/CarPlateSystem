@@ -10,7 +10,7 @@ namespace AracPlakaSistemi.Controllers
     public class HomeController : Controller
     {
         AracPlakaSistemiEntities db = new AracPlakaSistemiEntities();
-
+        [Authorize]
         public ActionResult Index()
         {
             var model = db.KayitliAraclar.ToList();
