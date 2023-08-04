@@ -24,7 +24,6 @@ namespace AracPlakaSistemi.Controllers
             if (kullaniciInDb!=null)
             {
                 FormsAuthentication.SetAuthCookie(kullaniciInDb.KullaniciAd, false);
-                
                 return RedirectToAction("Index", "Home");   
             }
             else
