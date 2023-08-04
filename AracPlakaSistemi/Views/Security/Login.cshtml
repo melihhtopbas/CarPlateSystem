@@ -1,86 +1,23 @@
-﻿@model  AracPlakaSistemi.Models.EntityFramework.Kullanici
-@{
-    Layout = null;
-}
-
-<!DOCTYPE html>
-
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Login</title>
-    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
-</head>
-<body>
-    <center>
-        <h2> LÜTFEN GİRİŞ YAPINIZ</h2>
-
-       <h1> NTJKSNVMEFVÖFÇCVZĞPŞFPVLÖÇ</h1>
-        <h2> HGRAMVREMPVFDÖL</h2>
-     
-            <!-- Email input -->
-            @using (Html.BeginForm("Login", "Security", FormMethod.Post))
-            {
-                <div class="form-outline mb-4">
-
-                    @Html.LabelFor(m => m.KullaniciAd)
-                    @Html.TextBoxFor(m => m.KullaniciAd, new {@class="form-control",PlaceHolder="kullanıcı"})
-                </div>
-
-                <!-- Password input -->
-                <div class="form-outline mb-4">
-                    @Html.LabelFor(m => m.Sifre)
-                    @Html.TextBoxFor(m => m.Sifre, new { @class = "form-control", PlaceHolder = "sifre" })
-
-                </div>
-
-                <!-- 2 column grid layout for inline styling -->
-                <div class="row mb-4">
-                    <div class="col d-flex justify-content-center">
-                        <!-- Checkbox -->
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="" id="form2Example31" checked />
-                            <label class="form-check-label" for="form2Example3"> Remember me </label>
-                        </div>
-                    </div>
-
-                    <div class="col">
-                        <!-- Simple link -->
-                        <a href="#!">Forgot password?</a>
-                    </div>
-                </div>
-
-
-                <div class="text-center">
-                    <p>Not a member? <a href="#!">Register</a></p>
-                    <button type="submit" class="btn btn-primary btn-lg btn-block"
-                            style="padding-left: 2.5rem; padding-right: 2.5rem;">
-                        Login
-                    </button>
-
-                    <p>or sign up with:</p>
-
-
-
-                    <button type="button" class="btn btn-link btn-floating mx-1">
-                        <i class="fab fa-facebook-f"></i>
-                    </button>
-
-                    <button type="button" class="btn btn-link btn-floating mx-1">
-                        <i class="fab fa-google"></i>
-                    </button>
-
-                    <button type="button" class="btn btn-link btn-floating mx-1">
-                        <i class="fab fa-twitter"></i>
-                    </button>
-
-                    <button type="button" class="btn btn-link btn-floating mx-1">
-                        <i class="fab fa-github"></i>
-                    </button>
-                </div>
-            }
-
-</center>
-   
-</body>
-</html>
+﻿<html>
+<div id="particles-js"></div>
+<div class="login-box">
+    <h2>Dashboard Access</h2>
+    <form>
+        <div class="user-box">
+            <input type="text" name="" required="">
+            <label>Username</label>
+        </div>
+        <div class="user-box">
+            <input type="password" name="" required="">
+            <label>Password</label>
+        </div>
+        <a href="#">
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            Login
+        </a>
+    </form>
+    <script src="particles.js"></script>
+</div>
