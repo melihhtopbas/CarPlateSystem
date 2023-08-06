@@ -32,5 +32,10 @@ namespace AracPlakaSistemi.Controllers
                 return View(Login());
             }
         }
+        public ActionResult LogOut()
+        {
+            FormsAuthentication.SignOut();
+            return RedirectToAction("Login", "Security");
+        }
     }
 }
