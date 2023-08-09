@@ -17,9 +17,9 @@ namespace AracPlakaSistemi.Controllers
             return View(model);
         }
 
-        public ActionResult About()
+        public ActionResult Anasayfa()
         {
-            ViewBag.Message = "Your application description page.";
+            ViewBag.Message = "Your contact page.";
 
             return View();
         }
