@@ -112,6 +112,55 @@ namespace AracPlakaSistemi.Controllers
                 });
 
         }
+        public async Task<ActionResult> Edit(int carId)
+        {
+            
+            var model = await _kayitliAracService.GetAracEditViewModelAsync(carId);
+            if (model != null)
+            {
+
+                return PartialView("~/Views/KayitliArac/_AracDuzenle.cshtml", model);
+            }
+            return PartialView("~/Views/Shared/_ItemNotFoundPartial.cshtml", "Araç sistemde bulunamadı!");
+        }
+        [HttpPost, ValidateInput(false), ValidateAntiForgeryToken]
+        public async Task<ActionResult> Edit(KayitliAracAEditViewModel model)
+        {
+             
+            if (ModelState.IsValid)
+            {
+                var callResult = await _kayitliAracService.EditAracAsync(model);
+                if (callResult.Success)
+                {
+
+                    ModelState.Clear();
+                    var viewModel = (KayitliAracListViewModel)callResult.Item;
+
+
+                    var jsonResult = Json(
+                        new
+                        {
+                            success = true,
+                            responseText = RenderPartialViewToString("~/Views/KayitliArac/DisplayTemplates/KayitliAracListViewModel.cshtml", viewModel),
+                            item = viewModel
+                        });
+                    jsonResult.MaxJsonLength = int.MaxValue;
+                    return jsonResult;
+                }
+                foreach (var error in callResult.ErrorMessages)
+                {
+                    ModelState.AddModelError("", error);
+                }
+            }
+
+            return Json(
+                new
+                {
+                    success = false,
+                    responseText = RenderPartialViewToString("~/Views/KayitliArac/_AracDuzenle.cshtml", model)
+                });
+
+        }
         [AjaxOnly, HttpPost]
         public async Task<ActionResult> Delete(int aracId)
         {

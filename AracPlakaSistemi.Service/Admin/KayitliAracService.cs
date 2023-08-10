@@ -68,7 +68,7 @@ namespace AracPlakaSistemi.Service.Admin
             var arac = new KayitliAraclar()
             {
 
-                ad_soyad = model.Ad + " " + model.Soyad,
+                ad_soyad = model.Ad,
                 model = model.Arac_Model,
                 marka = model.Arac_Marka,
                 plaka = model.Plaka,
@@ -103,6 +103,75 @@ namespace AracPlakaSistemi.Service.Admin
             }
 
 
+
+        }
+        public async Task<KayitliAracAEditViewModel> GetAracEditViewModelAsync(int aracId)
+        {
+            var country = await (from p in _context.KayitliAraclar
+                                 where p.Id == aracId
+                                 select new KayitliAracAEditViewModel()
+                                 {
+                                     Ad = p.ad_soyad,
+                                     Arac_Marka = p.marka,
+                                     Arac_Model = p.model,
+                                     Plaka = p.plaka,
+                                     Id = p.Id,
+                                     
+                                     Tc_No = p.tc_no,
+
+
+                                 }).FirstOrDefaultAsync();
+            return country;
+        }
+        public async Task<ServiceCallResult> EditAracAsync(KayitliAracAEditViewModel model)
+        {
+            var callResult = new ServiceCallResult() { Success = false };
+            bool nameExist = await _context.KayitliAraclar.AnyAsync(a => a.Id != model.Id && a.plaka == model.Plaka).ConfigureAwait(false);
+            if (nameExist)
+            {
+                callResult.ErrorMessages.Add("Bu plaka bulunmaktadır.");
+                return callResult;
+            }
+
+            var arac = await _context.KayitliAraclar.FirstOrDefaultAsync(a => a.Id == model.Id).ConfigureAwait(false);
+            if (arac == null)
+            {
+                callResult.ErrorMessages.Add("Böyle bir araç bulunamadı.");
+                return callResult;
+            }
+
+
+            arac.tc_no = model.Tc_No;
+            arac.plaka = model.Plaka;
+            arac.ad_soyad = model.Ad;
+            arac.model = model.Arac_Model;
+            arac.marka = model.Arac_Marka;
+            
+
+
+
+
+
+
+            using (var dbtransaction = _context.Database.BeginTransaction())
+            {
+                try
+                {
+                    await _context.SaveChangesAsync().ConfigureAwait(false);
+                    dbtransaction.Commit();
+
+
+
+                    callResult.Success = true;
+                    callResult.Item = await GetKayitliAracListViewAsync(arac.Id).ConfigureAwait(false);
+                    return callResult;
+                }
+                catch (Exception exc)
+                {
+                    callResult.ErrorMessages.Add(exc.GetBaseException().Message);
+                    return callResult;
+                }
+            }
 
         }
         public async Task<ServiceCallResult> DeleteKayitliAracAsync(int kayitliAracId)

@@ -32,9 +32,7 @@ namespace AracPlakaSistemi.ViewModels.Admin
         [Display(Name = "Araç Sahibi Adı")]
         [Required(ErrorMessage = "Lütfen giriniz")]
         public string Ad { get; set; }
-        [Display(Name = "Araç Sahibi Soyadı")]
-        [Required(ErrorMessage = "Lütfen giriniz")]
-        public string Soyad { get; set; }
+        
         [Display(Name = "Araç Sahibi TC No")]
         [Required(ErrorMessage = "Lütfen giriniz")]
 
@@ -62,7 +60,7 @@ namespace AracPlakaSistemi.ViewModels.Admin
        
         public string Ad { get; set; }
       
-        public string Soyad { get; set; }
+        
         
     }
     public class KayitliAracSearchViewModel
