@@ -1,4 +1,5 @@
-﻿using AracPlakaSistemi.Models.EntityFramework;
+﻿
+using AracPlakaSistemi.Data;
 using System;
 using System.Collections.Generic;
 using System.Linq;

@@ -7,19 +7,18 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace AracPlakaSistemi.Models.EntityFramework
+namespace AracPlakaSistemi.Data
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class GirisYapanAraclar
+    public partial class Kisi
     {
+        public int Id { get; set; }
+        public string Ad { get; set; }
+        public string Soyad { get; set; }
         public string tc_no { get; set; }
-        public Nullable<int> kapi_id { get; set; }
         public string plaka { get; set; }
-        public System.DateTime date { get; set; }
-        public int id { get; set; }
-    
-        public virtual GirisKapilari GirisKapilari { get; set; }
+        public bool isPersonal { get; set; }
     }
 }

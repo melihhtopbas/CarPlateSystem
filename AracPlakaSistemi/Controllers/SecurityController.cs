@@ -1,4 +1,5 @@
-﻿using AracPlakaSistemi.Models.EntityFramework;
+﻿using AracPlakaSistemi.Data;
+using AracPlakaSistemi.ViewModels.Admin;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,13 +19,13 @@ namespace AracPlakaSistemi.Controllers
         }
 
         [HttpPost]
-        public ActionResult Login(Kullanici kullanici)
+        public ActionResult Login(KullaniciViewModel kullanici)
         {
             var kullaniciInDb = db.Kullanici.FirstOrDefault(x => x.KullaniciAd == kullanici.KullaniciAd && x.Sifre==kullanici.Sifre);
             if (kullaniciInDb!=null)
             {
                 FormsAuthentication.SetAuthCookie(kullaniciInDb.KullaniciAd, false);
-                return RedirectToAction("Index", "Home");   
+                return RedirectToAction("Index", "KayitliArac");   
             }
             else
             {

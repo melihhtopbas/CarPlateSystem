@@ -7,27 +7,24 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace AracPlakaSistemi.Models.EntityFramework
+namespace AracPlakaSistemi.Data
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class KayitliAraclar
+    public partial class GirisKapilari
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public KayitliAraclar()
+        public GirisKapilari()
         {
-            this.PlakaGorsel = new HashSet<PlakaGorsel>();
+            this.GirisYapanAraclar = new HashSet<GirisYapanAraclar>();
         }
     
         public int Id { get; set; }
-        public string plaka { get; set; }
-        public string marka { get; set; }
-        public string model { get; set; }
-        public string ad_soyad { get; set; }
-        public string tc_no { get; set; }
+        public string camera_adres { get; set; }
+        public string camera_ip { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<PlakaGorsel> PlakaGorsel { get; set; }
+        public virtual ICollection<GirisYapanAraclar> GirisYapanAraclar { get; set; }
     }
 }

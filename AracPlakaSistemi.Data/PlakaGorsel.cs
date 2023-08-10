@@ -7,18 +7,17 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace AracPlakaSistemi.Models.EntityFramework
+namespace AracPlakaSistemi.Data
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class Kisi
+    public partial class PlakaGorsel
     {
         public int Id { get; set; }
-        public string Ad { get; set; }
-        public string Soyad { get; set; }
-        public string tc_no { get; set; }
-        public string plaka { get; set; }
-        public bool isPersonal { get; set; }
+        public Nullable<int> PlakaId { get; set; }
+        public string PathName { get; set; }
+    
+        public virtual KayitliAraclar KayitliAraclar { get; set; }
     }
 }

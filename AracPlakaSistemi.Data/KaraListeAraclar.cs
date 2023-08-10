@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace AracPlakaSistemi.Models.EntityFramework
+namespace AracPlakaSistemi.Data
 {
     using System;
     using System.Collections.Generic;

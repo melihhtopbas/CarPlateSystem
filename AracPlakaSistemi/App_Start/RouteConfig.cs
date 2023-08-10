@@ -12,7 +12,11 @@ namespace AracPlakaSistemi
         public static void RegisterRoutes(RouteCollection routes)
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
-
+            routes.MapRoute(
+               name: "Anasayfa",
+               url: "",
+               defaults: new { controller = "KayitliArac", action = "Index" }
+               );
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",

@@ -7,19 +7,16 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace AracPlakaSistemi.Models.EntityFramework
+namespace AracPlakaSistemi.Data
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class MisafirAraclar
+    public partial class Kullanici
     {
         public int Id { get; set; }
-        public string tc_no { get; set; }
-        public string plaka { get; set; }
-        public string arac_marka { get; set; }
-        public System.DateTime date { get; set; }
-        public string Ad { get; set; }
-        public string Soyad { get; set; }
+        public string KullaniciAd { get; set; }
+        public string Sifre { get; set; }
+        public string Role { get; set; }
     }
 }

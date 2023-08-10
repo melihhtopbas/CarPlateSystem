@@ -40,22 +40,22 @@
                     <li class="dropdown notifications-menu" id="new-messages-notifications-menu">
                         <a onclick="myFunction()" href="javascript:void(0);" class="dropdown-toggle new-messages-icon" data-toggle="dropdown">
                             <i class="far fa-comments"></i>
-                            
-                                <span class="label label-danger new-icon-messages-total-count">
-                                   0
-                                </span>
+
+                            <span class="label label-danger new-icon-messages-total-count">
+                                0
+                            </span>
                         </a>
-                       
-                            <ul class="dropdown-menu">
-                                <li class="header">Toplam <strong class="new-messages-total-count">0</strong> işlem bekleyen mesajınız var</li>
-                                <li>
-                                    <!-- inner menu: contains the actual data -->
-                                    <ul class="menu messages-ecommerce-menu">
-                                    </ul>
-                                </li>
-                            </ul>
-                        
-                        
+
+                        <ul class="dropdown-menu">
+                            <li class="header">Toplam <strong class="new-messages-total-count">0</strong> işlem bekleyen mesajınız var</li>
+                            <li>
+                                <!-- inner menu: contains the actual data -->
+                                <ul class="menu messages-ecommerce-menu">
+                                </ul>
+                            </li>
+                        </ul>
+
+
 
                     </li>
                     <li class="message-box dropdown notifications-menu" id="message-box">
@@ -68,7 +68,7 @@
                         <ul class="dropdown-menu" style="border: 1px solid rgba(0,0,0,.15); bottom:auto ">
                             <li class="header">Toplam <strong class="new-messages-total-count">0</strong> işlem bekleyen mesajınız var</li>
 
-                           
+
                         </ul>
 
 
@@ -209,6 +209,7 @@
 
                 <li><a href="#"><i class="fa-solid fa-home"></i> <span>Anasayfa</span></a></li>
                 <li><a href="#"><i class="fa-solid fa-car"></i><span> En Son Giren Araçlar</span></a></li>
+                <li><a href="@Url.Action("Index","KayitliArac")"><i class="fa-solid fa-car"></i><span> Kayıtlı Araçlar</span></a></li>
                 <li><a href="#"><i class="fa-solid fa-camera"></i> <span>Kamera Listesi</span></a></li>
                 <li><a href="#"><i class="fa-solid fa-car"></i> <span>Misafir Araç Kayıt</span></a></li>
                 <li><a href="#"><i class="fa-solid fa-car"></i> <span>Kara Liste Araç Kayıt</span></a></li>
@@ -232,9 +233,6 @@
     <!-- /.content-wrapper -->
 
     <footer class="main-footer">
-
-       
-
     </footer>
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
@@ -292,6 +290,7 @@
 
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
+      
         function myFunction() {
             document.getElementById("openDropDown").classList.toggle("open");
             document.getElementById("new-messages-notifications-menu").classList.toggle("open");
@@ -304,7 +303,7 @@
 
     </script>
     <script>
-   
+
 
 
     </script>
@@ -321,10 +320,63 @@
             /* Moving button 4px to y-axis */
         }
     </style>
+    <script>
+        $(document).ready(function () {
+
+            $('#kayitliAracSearchForm').submit();
+           
+
+
+            
+
+        });
+        function deleteKayitliArac() {
+            var that = $(this);
+            var aracId = that.data('aracId');
+
+            var container = $('#KayitliAracListContainer');
+            //The overlay
+            var overlay = $("<div class='loader-wrapper'><div class='loadingOverlay'></div></div>");
+
+            container.append(overlay);
+
+            $.ajax({
+                url: '/KayitliArac/delete',
+                dataType: 'json',
+                type: "POST",
+                cache: false,
+                data: { aracId: aracId }
+            }).done(function (result) {
+                container.find(overlay).remove();
+                if (result.success) {
+                    var $tr = that.closest('tr.master-row');
+                    $tr.nextUntil('tr.master-row').empty().remove();
+                    $tr.animateDelete();
+
+                    $.each(result.successMessages,
+                        function (i, item) {
+                            toastr.success(item);
+                        });
+                    $.each(result.warningMessages,
+                        function (i, item) {
+                            toastr.success(item);
+                        });
+                } else {
+                    $.each(result.errorMessages,
+                        function (i, item) {
+                            toastr.error(item);
+                        });
+                }
+            }).fail(function () {
+                container.find(overlay).remove();
+            });
+        };
+
+    </script>
 
 
 
-    
+
 
 </body>
 </html>
