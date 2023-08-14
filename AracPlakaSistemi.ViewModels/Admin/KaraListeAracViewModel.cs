@@ -8,18 +8,16 @@ using System.Xml.Linq;
 
 namespace AracPlakaSistemi.ViewModels.Admin
 {
-    public class KaraListeAracViewModel
+    public class KaraListeAracListCrudBaseViewModel
     {
-        public int Id { get; set; }
+        
         [Display(Name = "Araç Plakası")]
         [Required(ErrorMessage = "Lütfen giriniz")]
         public string Plaka { get; set; }
         [Display(Name = "Araç Markası")]
         [Required(ErrorMessage = "Lütfen giriniz")]
         public string Arac_Marka { get; set; }
-        [Display(Name = "Araç Modeli")]
-        [Required(ErrorMessage = "Lütfen giriniz")]
-        public string Arac_Model { get; set; }
+        
         [Display(Name = "Araç Sahibi Adı")]
         [Required(ErrorMessage = "Lütfen giriniz")]
         public string Ad { get; set; }
@@ -30,5 +28,41 @@ namespace AracPlakaSistemi.ViewModels.Admin
         [Required(ErrorMessage = "Lütfen giriniz")]
 
         public string tc_no { get; set; }
+    }
+    public class KaraListeAracAddViewModel : KaraListeAracListCrudBaseViewModel
+    {
+
+    }
+    public class KaraListeAracEditViewModel : KaraListeAracListCrudBaseViewModel
+    {
+        public int Id { get; set; }
+    }
+    public class KaraListeAracListViewModel
+    {
+        public int Id { get; set; }
+       
+       
+        public string Plaka { get; set; }
+    
+        public string Arac_Marka { get; set; }
+
+
+        public DateTime Tarih { get; set; }
+
+
+        public string AdSoyad { get; set; }
+       
+      
+       
+      
+
+        public string tc_no { get; set; }
+
+
+
+    }
+    public class KaraListeAracSearchViewModel
+    {
+        public string Plaka { get; set; }
     }
 }

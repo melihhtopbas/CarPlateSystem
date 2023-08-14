@@ -180,6 +180,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\UnityConfig.cs" />
     <Compile Include="Controllers\Abstract\AdminBaseController.cs" />
+    <Compile Include="Controllers\KaraListeAracController.cs" />
     <Compile Include="Controllers\KayitliAracController.cs" />
     <Compile Include="Controllers\SecurityController.cs" />
     <Compile Include="Extensions\BootstrapExtensions.cs" />
@@ -2433,6 +2434,11 @@
     <Content Include="Views\KayitliArac\_AracEkle.cshtml" />
     <Content Include="Views\KayitliArac\_AracDuzenle.cshtml" />
     <Content Include="Views\KayitliArac\_AracPlaka.cshtml" />
+    <Content Include="Views\KaraListeArac\DisplayTemplates\KaraListeAracListViewModel.cshtml" />
+    <Content Include="Views\KaraListeArac\_AracDuzenle.cshtml" />
+    <Content Include="Views\KaraListeArac\_AracEkle.cshtml" />
+    <Content Include="Views\KaraListeArac\AracList.cshtml" />
+    <Content Include="Views\KaraListeArac\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -208,11 +208,11 @@
 
 
                 <li><a href="#"><i class="fa-solid fa-home"></i> <span>Anasayfa</span></a></li>
-                <li><a href="#"><i class="fa-solid fa-car"></i><span> En Son Giren Araçlar</span></a></li>
+                <li><a href="#"><i class="fa-solid fa-video"></i><span> En Son Giren Araçlar</span></a></li>
                 <li><a href="@Url.Action("Index","KayitliArac")"><i class="fa-solid fa-car"></i><span> Kayıtlı Araçlar</span></a></li>
                 <li><a href="#"><i class="fa-solid fa-camera"></i> <span>Kamera Listesi</span></a></li>
-                <li><a href="#"><i class="fa-solid fa-car"></i> <span>Misafir Araç Kayıt</span></a></li>
-                <li><a href="#"><i class="fa-solid fa-car"></i> <span>Kara Liste Araç Kayıt</span></a></li>
+                <li><a href="#"><i class="fa-solid fa-users"></i> <span>Misafir Araç Kayıt</span></a></li>
+                <li><a href="@Url.Action("Index","KaraListeArac")"><i class="fa-solid fa-book"></i> <span>Kara Liste Araç Kayıt</span></a></li>
                 <li><a href="#"><i class="fa-solid fa-magnifying-glass"></i> <span>Araç Bilgi Sorgulama</span></a></li>
 
 
@@ -324,6 +324,7 @@
         $(document).ready(function () {
 
             $('#kayitliAracSearchForm').submit();
+            $('#karaListeAracSearchForm').submit();
            
 
 
@@ -346,6 +347,47 @@
                 type: "POST",
                 cache: false,
                 data: { aracId: aracId }
+            }).done(function (result) {
+                container.find(overlay).remove();
+                if (result.success) {
+                    var $tr = that.closest('tr.master-row');
+                    $tr.nextUntil('tr.master-row').empty().remove();
+                    $tr.animateDelete();
+
+                    $.each(result.successMessages,
+                        function (i, item) {
+                            toastr.success(item);
+                        });
+                    $.each(result.warningMessages,
+                        function (i, item) {
+                            toastr.success(item);
+                        });
+                } else {
+                    $.each(result.errorMessages,
+                        function (i, item) {
+                            toastr.error(item);
+                        });
+                }
+            }).fail(function () {
+                container.find(overlay).remove();
+            });
+        };
+        function deleteKaraListeArac() {
+            var that = $(this);
+            var klAracId = that.data('klAracId');
+
+            var container = $('#KaraListeAracListContainer');
+            //The overlay
+            var overlay = $("<div class='loader-wrapper'><div class='loadingOverlay'></div></div>");
+
+            container.append(overlay);
+
+            $.ajax({
+                url: '/KaraListeArac/delete',
+                dataType: 'json',
+                type: "POST",
+                cache: false,
+                data: { klAracId: klAracId }
             }).done(function (result) {
                 container.find(overlay).remove();
                 if (result.success) {
