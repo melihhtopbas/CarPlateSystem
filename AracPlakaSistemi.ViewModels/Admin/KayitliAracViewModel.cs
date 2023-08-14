@@ -16,10 +16,10 @@ namespace AracPlakaSistemi.ViewModels.Admin
     {
         public KayitliAracCrudBaseViewModel()
         {
-            this.PlakaGorsel = new HashSet<PlakaGorselViewModel>();
+            this.PlakaGorselViewModels = new HashSet<PlakaGorselViewModel>();
         }
 
-       
+        public string FileName { get; set; }
         [Display(Name = "Araç Plakası")]
         [Required(ErrorMessage = "Lütfen giriniz")]
         public string Plaka { get; set; }
@@ -39,7 +39,7 @@ namespace AracPlakaSistemi.ViewModels.Admin
         public string Tc_No { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<PlakaGorselViewModel> PlakaGorsel { get; set; }
+        public  IEnumerable<PlakaGorselViewModel> PlakaGorselViewModels { get; set; }
     }
     public class KayitliAracAddViewModel : KayitliAracCrudBaseViewModel
     {

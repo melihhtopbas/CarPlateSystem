@@ -34,23 +34,23 @@ namespace AracPlakaSistemi.Service.Admin
 
                     });
         }
-        public IQueryable<KayitliAracListViewModel> GetKayitliAracListIQueryable(KayitliAracSearchViewModel citySearchViewModel)
+        public IQueryable<KayitliAracListViewModel> GetKayitliAracListIQueryable(KayitliAracSearchViewModel kayitliAracSearchViewModel)
         {
             var predicate = PredicateBuilder.New<Data.KayitliAraclar>(true);/*AND*/
 
-            if (!string.IsNullOrWhiteSpace(citySearchViewModel.Plaka))
+            if (!string.IsNullOrWhiteSpace(kayitliAracSearchViewModel.Plaka))
             {
-                predicate.And(a => a.plaka.Contains(citySearchViewModel.Plaka));
+                predicate.And(a => a.plaka.Contains(kayitliAracSearchViewModel.Plaka));
             }
 
 
             return _getKayitliAracListIQueryable(predicate);
         }
-        public async Task<KayitliAracListViewModel> GetKayitliAracListViewAsync(long cityId)
+        public async Task<KayitliAracListViewModel> GetKayitliAracListViewAsync(long carId)
         {
 
             var predicate = PredicateBuilder.New<Data.KayitliAraclar>(true);/*AND*/
-            predicate.And(a => a.Id == cityId);
+            predicate.And(a => a.Id == carId);
             var arac = await _getKayitliAracListIQueryable(predicate).SingleOrDefaultAsync().ConfigureAwait(false);
             return arac;
         }
@@ -78,7 +78,11 @@ namespace AracPlakaSistemi.Service.Admin
 
 
             };
-
+            arac.PlakaGorsel.Add(new PlakaGorsel
+            {
+                PathName =  model.FileName,
+            });
+            
 
 
 
@@ -107,7 +111,7 @@ namespace AracPlakaSistemi.Service.Admin
         }
         public async Task<KayitliAracAEditViewModel> GetAracEditViewModelAsync(int aracId)
         {
-            var country = await (from p in _context.KayitliAraclar
+            var car = await (from p in _context.KayitliAraclar
                                  where p.Id == aracId
                                  select new KayitliAracAEditViewModel()
                                  {
@@ -121,7 +125,7 @@ namespace AracPlakaSistemi.Service.Admin
 
 
                                  }).FirstOrDefaultAsync();
-            return country;
+            return car;
         }
         public async Task<ServiceCallResult> EditAracAsync(KayitliAracAEditViewModel model)
         {
@@ -212,6 +216,22 @@ namespace AracPlakaSistemi.Service.Admin
                     return callResult;
                 }
             }
+        }
+        public async Task<PlakaGorselViewModel> GetKayitliAracPlaka(int carId)
+        {
+
+            var car = await (from p in _context.PlakaGorsel
+                                 where p.PlakaId == carId
+                                 select new PlakaGorselViewModel()
+                                 {
+                                      PathName = p.PathName,
+                                      PlakaId = carId,
+                                      Id = p.Id
+
+
+                                 }).FirstOrDefaultAsync();
+            return car;
+
         }
     }
 }

@@ -51,6 +51,9 @@
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
+    <Reference Include="ImageResizer, Version=4.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ImageResizer.4.2.8\lib\net45\ImageResizer.dll</HintPath>
+    </Reference>
     <Reference Include="LightInject, Version=6.6.4.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\LightInject.6.6.4\lib\net462\LightInject.dll</HintPath>
     </Reference>
@@ -2429,10 +2432,13 @@
     <Content Include="Views\KayitliArac\AracList.cshtml" />
     <Content Include="Views\KayitliArac\_AracEkle.cshtml" />
     <Content Include="Views\KayitliArac\_AracDuzenle.cshtml" />
+    <Content Include="Views\KayitliArac\_AracPlaka.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Models\EntityFramework\" />
+    <Folder Include="thumbs\" />
+    <Folder Include="uploads\temp\thumbs\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

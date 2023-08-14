@@ -11,6 +11,18 @@
     <td style="width:50px">
         <a data-modal-form="true"
            data-modal-size="modal-lg"
+           
+           data-modal-title="Araç Plaka"
+           data-hook-beforeunload="true"
+           class="btn btn-block btn-info btn-sm"
+           href="@Url.Action("PlakaGoster", "KayitliArac", routeValues: new {carId=Model.Id})">
+            <i class="fa-solid fa-car"></i> Araç Plakası Göster
+        </a>
+
+    </td>
+    <td style="width:50px">
+        <a data-modal-form="true"
+           data-modal-size="modal-lg"
            data-modal-update="#arac_@Model.Id"
            data-modal-highlight="#arac_@Model.Id"
            data-modal-title="Araç Düzenle"

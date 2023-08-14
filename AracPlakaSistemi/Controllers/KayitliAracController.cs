@@ -3,10 +3,12 @@ using AracPlakaSistemi.Data;
 using AracPlakaSistemi.Extensions;
 using AracPlakaSistemi.Service.Admin;
 using AracPlakaSistemi.ViewModels.Admin;
+using ImageResizer;
 using Microsoft.Web.Mvc;
 using MvcPaging;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
@@ -78,7 +80,30 @@ namespace AracPlakaSistemi.Controllers
         [HttpPost, ValidateInput(false), ValidateAntiForgeryToken]
         public async Task<ActionResult> Add(KayitliAracAddViewModel model)
         {
-            
+            HttpFileCollectionBase Files = Request.Files;
+            HttpPostedFileBase ImageFile = Files[0];
+            if (ImageFile != null && ImageFile.ContentLength > 0)
+            {
+                var tempImageDirectory = System.IO.Path.Combine(Server.MapPath(SystemConstants.GalleryImagePath));
+                var tempImageThumbDirectory = System.IO.Path.Combine(Server.MapPath(SystemConstants.GalleryImageThumbPath));
+
+                if (!System.IO.Directory.Exists(tempImageDirectory))
+                    System.IO.Directory.CreateDirectory(tempImageDirectory);
+
+                if (!System.IO.Directory.Exists(tempImageThumbDirectory))
+                    System.IO.Directory.CreateDirectory(tempImageThumbDirectory);
+
+                string fileName = $"{Guid.NewGuid().ToString("N")}{Path.GetExtension(ImageFile.FileName)}";
+
+                string pathImage = System.IO.Path.Combine(tempImageDirectory, fileName);
+                string pathImageThumb = System.IO.Path.Combine(tempImageThumbDirectory, fileName);
+
+                ImageBuilder.Current.Build(ImageFile, pathImage, new ResizeSettings(SystemConstants.ImageResizerServiceImageSettings));
+                ImageBuilder.Current.Build(ImageFile, pathImageThumb, new ResizeSettings(SystemConstants.ImageResizerServiceThumbImageSettings));
+                model.FileName = "\\thumbs\\" + fileName;
+                ImageFile.SaveAs(Server.MapPath(model.FileName));
+                
+            }
 
             if (ModelState.IsValid)
             {
@@ -185,6 +210,17 @@ namespace AracPlakaSistemi.Controllers
                     success = false,
                     errorMessages = callResult.ErrorMessages
                 });
+
+        }
+        [AjaxOnly]
+        [HttpGet]
+        public async Task<ActionResult> PlakaGoster(int carId)
+        {
+
+
+            var plaka = await _kayitliAracService.GetKayitliAracPlaka(carId);
+            
+            return PartialView("~/Views/KayitliArac/_AracPlaka.cshtml", plaka);
 
         }
 
