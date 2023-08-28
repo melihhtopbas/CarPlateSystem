@@ -1,0 +1,38 @@
+﻿ 
+@{
+
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<title>Araç Bilgisi Sorgula</title>
+<div class="row">
+    <div class="col-xs-12">
+        <div class="box box-solid">
+            <div class="box-header">
+                <i class="fa fa-book"></i>
+                <h3 class="box-title">@ViewBag.Title</h3>
+            </div>
+            <div class="box-body">
+                 
+                <div class="row">
+
+
+
+                    <div class="clearfix"></div>
+                    <div class="form-group form-group-sm col-xs-12 col-sm-12 col-md-4 col-md-push-4">
+                        <a data-modal-form="true"
+                           data-modal-size="modal-lg"
+                           data-modal-title="Plaka Sorgulama"
+                           data-hook-beforeunload="true"
+                           class="pressActive btn btn-block btn-info btn-sm"
+                           href="@Url.Action("AracBilgisiSorgula", "AracBilgi")">
+                            <i class="fa fa-search"></i> Plaka Sorgula
+                        </a>
+                    </div>
+                </div>
+
+                
+               
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,48 @@
+﻿@model AracPlakaSistemi.ViewModels.Admin.GirisYapanAracSearchViewModel
+@{
+
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<title>Giriş Yapan Araçlar</title>
+<div class="row">
+    <div class="col-xs-12">
+        <div class="box box-solid">
+            <div class="box-header">
+                <i class="fa fa-book"></i>
+                <h3 class="box-title">@ViewBag.Title</h3>
+            </div>
+            <div class="box-body">
+                @using (Html.BeginForm("AracList", "GirisYapanArac", FormMethod.Post, new { role = "form", id = "girisYapanAracSearchForm", data_ajax_form = "true", data_target_container = "#GirisYapanAracListContainer" }))
+                {
+                    <div class="row">
+                        <div class="form-group form-group-sm col-xs-12 col-sm-6 col-md-4 col-lg-4 @Html.ModelStateFor(m => m.Plaka)">
+                            @Html.TextBoxBlockLabelAsAddonFor(m => m.Plaka)
+                        </div>
+
+
+                        <div class="clearfix"></div>
+                        <div class="form-group form-group-sm col-xs-12 col-sm-4 col-sm-push-3 col-md-4 col-md-push-3">
+                            <div class="input-group">
+                                <button type='submit' class="btn btn-sm btn-default btn-block"><i class="fa fa-search"></i></button>
+                            </div>
+                        </div>
+                        <div class="form-group form-group-sm col-xs-5 col-sm-4 col-md-2 col-md-push-4">
+                            <a data-modal-form="true"
+                               data-modal-size="modal-lg"
+                               data-modal-title="Grafik"
+                               data-hook-beforeunload="true"
+                               class="pressActive btn btn-block btn-info btn-sm"
+                               href="@Url.Action("Grafik", "GirisYapanArac")">
+                                <i class="fa-solid fa-chart-simple"></i> Grafik Göster
+                            </a>
+                        </div>
+                    </div>
+
+                }
+                <div>
+                    <div id="GirisYapanAracListContainer"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

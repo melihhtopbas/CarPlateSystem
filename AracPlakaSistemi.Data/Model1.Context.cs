@@ -25,13 +25,12 @@ namespace AracPlakaSistemi.Data
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<GirisKapilari> GirisKapilari { get; set; }
-        public virtual DbSet<GirisYapanAraclar> GirisYapanAraclar { get; set; }
-        public virtual DbSet<KaraListeAraclar> KaraListeAraclar { get; set; }
-        public virtual DbSet<KayitliAraclar> KayitliAraclar { get; set; }
         public virtual DbSet<Kisi> Kisi { get; set; }
         public virtual DbSet<Kullanici> Kullanici { get; set; }
-        public virtual DbSet<MisafirAraclar> MisafirAraclar { get; set; }
         public virtual DbSet<PlakaGorsel> PlakaGorsel { get; set; }
+        public virtual DbSet<KayitliAraclar> KayitliAraclar { get; set; }
+        public virtual DbSet<MisafirAraclar> MisafirAraclar { get; set; }
+        public virtual DbSet<GirisYapanAraclar> GirisYapanAraclar { get; set; }
+        public virtual DbSet<GirisKapilari> GirisKapilari { get; set; }
     }
 }

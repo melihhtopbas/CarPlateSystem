@@ -11,17 +11,50 @@ namespace AracPlakaSistemi.ViewModels.Admin
     public class GirisYapanAracViewModel
     {
 
-        [Display(Name = "Araç Sahibi Adı")]
-        [Required(ErrorMessage = "Lütfen giriniz")]
-        public string Ad { get; set; }
-        [Display(Name = "Araç Sahibi TC No")]
-        [Required(ErrorMessage = "Lütfen giriniz")]
-        public string TC_NO { get; set; }
-        public Nullable<int> Kapi_Id { get; set; }
-        public string Plaka { get; set; }
+      
+    }
+    public class GirisYapanAracCrudBaseViewModel
+    {
        
-        public int id { get; set; }
+        public Nullable<int> Kapi_Id { get; set; }
+        [Required(ErrorMessage ="Plakayı giriniz")]
+        public string Plaka { get; set; }
+
+        public int Id { get; set; }
 
         public virtual GirisKapiViewModel GirisKapilari { get; set; }
+        public GirisKapiIdSelectViewModel GirisKapisi { get; set; }
     }
+    public class GirisYapanAracAddViewModel : GirisYapanAracCrudBaseViewModel
+    {
+
+
+    }
+    public class GirisYapanAracListViewModel
+    {
+        public string Plaka { get; set; }
+
+        public int Id { get; set; }
+        public string GirisKapiAdresi{ get; set; }
+        public bool MisafirAracMi { get; set; }
+        public bool KayitliAracMi { get; set; }
+        public bool KaraListeAracMi { get; set; }
+        public bool YeniAracMi { get; set; }
+        public DateTime Tarih { get; set; }
+
+    }
+    public class GirisYapanAracSearchViewModel
+    {
+        public string Plaka { get; set; }
+    }
+    public class GirisYapanAracGrafik
+    {
+        public string car { get; set; }
+       
+
+        public int count { get; set; }
+    
+       
+    }
+
 }

@@ -56,9 +56,6 @@
     <Compile Include="GirisYapanAraclar.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="KaraListeAraclar.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
     <Compile Include="KayitliAraclar.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>

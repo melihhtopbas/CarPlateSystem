@@ -4,7 +4,10 @@
 
     <td>@Model.Ad</td>
     <td>
-        @Model.Plaka
+        @Model.Plaka @if (Model.blacklist.Equals(true))
+        {
+            <label>⚠️ Kara Liste</label>
+        }
     </td>
     <td>@Model.Arac_Marka</td>
     <td>@Model.Arac_Model</td>

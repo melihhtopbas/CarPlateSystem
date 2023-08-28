@@ -42,6 +42,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Admin\AracBilgiSorguViewModel.cs" />
     <Compile Include="Admin\GirisKapiViewModel.cs" />
     <Compile Include="Admin\GirisYapanAracViewModel.cs" />
     <Compile Include="Admin\KaraListeAracViewModel.cs" />
@@ -52,5 +53,6 @@
     <Compile Include="Common\ServiceCallResult.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

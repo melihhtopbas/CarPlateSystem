@@ -5,8 +5,20 @@
             <h4><i class="fa-solid fa-circle-info"></i> Bilgilendirme!</h4>
            
             <ul>
-                <li>Lütfen araç plakalarını aşağıdaki gibi boşluk bırakarak giriniz!</li>
-                <li> <strong>38 ABC 123</strong></li>
+                <li>Lütfen kara listeye almak istediğiniz aracın plakasını aşağıdaki listeden seçiniz!</li>
+                 
+            </ul>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-xs-12">
+        <div class="alert alert-info alert-dismissible">
+            <h4><i class="fa-solid fa-circle-info"></i> Bilgilendirme!</h4>
+
+            <ul>
+                <li>Listede plakalar gözükmüyorsa; bütün araçlar kara listededir demektir!</li>
+
             </ul>
         </div>
     </div>
@@ -50,25 +62,14 @@
 
     <div class="row">
 
-
-
-        <div class="form-group form-group-sm col-xs-12 col-sm-12 col-md-6 col-lg-6 @Html.ModelStateFor(m => m.Ad)">
-            @Html.TextBoxBlockLabelAsAddonFor(m => m.Ad, new { @class = "show-maxlength", maxlength = "50", autofocus = "true" })
+        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+            <div class="row">
+                @Html.EditorFor(m => m.AracListesi)
+            </div>
         </div>
 
-        <div class="form-group form-group-sm col-xs-12 col-sm-12 col-md-6 col-lg-6 @Html.ModelStateFor(m => m.Soyad)">
-            @Html.TextBoxBlockLabelAsAddonFor(m => m.Soyad, new { @class = "show-maxlength", maxlength = "50" })
-        </div>
-        <div class="form-group form-group-sm col-xs-12 col-sm-12 col-md-6 col-lg-6 @Html.ModelStateFor(m => m.Arac_Marka)">
-            @Html.TextBoxBlockLabelAsAddonFor(m => m.Arac_Marka, new { @class = "show-maxlength", maxlength = "50" })
-        </div>
-        <div class="form-group form-group-sm col-xs-12 col-sm-12 col-md-6 col-lg-6 @Html.ModelStateFor(m => m.tc_no)">
-            @Html.TextBoxBlockLabelAsAddonFor(m => m.tc_no, new { @class = "show-maxlength", maxlength = "11" })
-        </div>
-        <div class="form-group form-group-sm col-xs-12 col-sm-12 col-md-6 col-lg-6 @Html.ModelStateFor(m => m.Plaka)">
-            @Html.TextBoxBlockLabelAsAddonFor(m => m.Plaka, new { @class = "show-maxlength", maxlength = "15" })
-        </div>
-        
+
+
 
 
 

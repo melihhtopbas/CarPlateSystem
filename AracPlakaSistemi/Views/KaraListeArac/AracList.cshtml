@@ -1,19 +1,20 @@
 ﻿@model IPagedList<AracPlakaSistemi.ViewModels.Admin.KaraListeAracListViewModel>
- 
- 
+
+
 <div class="products-list-tools clearfix">
 
-    
-        <a class="btn btn-primary btn-sm"
-           data-modal-form="true"
-           data-modal-size="modal-lg"
-           data-modal-prepend="tbody#KaraListeAracList"
-           data-modal-title="Araç Ekle"
-           data-hook-beforeunload="true"
-           href="@Url.Action("Add", "KaraListeArac")">
-            <i class="fa fa-plus"></i>Kara Liste Araç Kayıt
-        </a>
-   
+
+    <a class="btn btn-primary btn-sm"
+       data-modal-form="true"
+       data-modal-size="modal-lg"
+       data-modal-prepend="tbody#KaraListeAracList"
+       data-modal-title="Araç Ekle"
+       data-hook-beforeunload="true"
+       data-modal-save-message="Araç kara listeye eklendi"
+       href="@Url.Action("Add", "KaraListeArac")">
+        <i class="fa fa-plus"></i>Kara Liste Araç Kayıt
+    </a>
+
 
 
 
@@ -28,10 +29,10 @@
 
         &nbsp;
         @Html.Pager(Model.PageSize, Model.PageNumber, Model.TotalItemCount, new AjaxOptions { UpdateTargetId = "KaraListeAracListContainer" }).Options(o => o
-            .Action("KaraListeArac")
+            .Action("AracList")
             .DisplayTemplate("BootstrapPage")
             .MaxNrOfPages(6)
-            .AlwaysAddFirstPageNumber()  
+            .AlwaysAddFirstPageNumber()
             )
     </div>
 </div>
@@ -42,9 +43,10 @@
             <th>Adı</th>
             <th>Araç Plaka</th>
             <th>Araç Marka</th>
-           
-           
-            <th style="width:50px">Düzenle</th>
+            <th>Araç Model</th>
+
+
+
             <th style="width:50px">Sil</th>
         </tr>
     </thead>
@@ -58,11 +60,11 @@
 <div class="pull-left">
 
     @Html.Pager(Model.PageSize, Model.PageNumber, Model.TotalItemCount, new AjaxOptions { UpdateTargetId = "KaraListeAracListContainer" }).Options(o => o
-        .Action("KaraListeArac")
+        .Action("AracList")
         .DisplayTemplate("BootstrapPage")
         .MaxNrOfPages(6)
         .AlwaysAddFirstPageNumber()
-       
+
 
         )
 </div>

@@ -26,6 +26,8 @@ namespace AracPlakaSistemi.Data
         public string model { get; set; }
         public string ad_soyad { get; set; }
         public string tc_no { get; set; }
+        public System.DateTime datetime { get; set; }
+        public bool blacklist { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PlakaGorsel> PlakaGorsel { get; set; }

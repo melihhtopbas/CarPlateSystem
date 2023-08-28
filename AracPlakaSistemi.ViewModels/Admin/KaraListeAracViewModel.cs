@@ -10,7 +10,9 @@ namespace AracPlakaSistemi.ViewModels.Admin
 {
     public class KaraListeAracListCrudBaseViewModel
     {
+
         
+
         [Display(Name = "Araç Plakası")]
         [Required(ErrorMessage = "Lütfen giriniz")]
         public string Plaka { get; set; }
@@ -29,9 +31,9 @@ namespace AracPlakaSistemi.ViewModels.Admin
 
         public string tc_no { get; set; }
     }
-    public class KaraListeAracAddViewModel : KaraListeAracListCrudBaseViewModel
+    public class KaraListeAracAddViewModel
     {
-
+        public KaraListeAracIdSelectViewModel AracListesi { get; set; }
     }
     public class KaraListeAracEditViewModel : KaraListeAracListCrudBaseViewModel
     {
@@ -45,16 +47,18 @@ namespace AracPlakaSistemi.ViewModels.Admin
         public string Plaka { get; set; }
     
         public string Arac_Marka { get; set; }
+        public string Arac_Model { get; set; }
 
 
-        public DateTime Tarih { get; set; }
+        
 
 
         public string AdSoyad { get; set; }
-       
-      
-       
-      
+        public bool blacklist { get; set; }
+
+
+
+
 
         public string tc_no { get; set; }
 
@@ -64,5 +68,11 @@ namespace AracPlakaSistemi.ViewModels.Admin
     public class KaraListeAracSearchViewModel
     {
         public string Plaka { get; set; }
+    }
+    public class KaraListeAracIdSelectViewModel
+    {
+        [Display(Name = "Plaka")]
+        [Required(ErrorMessage = "Lütfen giriniz")]
+        public int AracId{ get; set; }
     }
 }

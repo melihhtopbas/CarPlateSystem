@@ -14,11 +14,14 @@ namespace AracPlakaSistemi.Data
     
     public partial class GirisYapanAraclar
     {
-        public string tc_no { get; set; }
         public Nullable<int> kapi_id { get; set; }
         public string plaka { get; set; }
-        public System.DateTime date { get; set; }
+        public System.DateTime tarih { get; set; }
         public int id { get; set; }
+        public bool kayitliArac { get; set; }
+        public bool misafirArac { get; set; }
+        public bool yeniArac { get; set; }
+        public bool karaListeArac { get; set; }
     
         public virtual GirisKapilari GirisKapilari { get; set; }
     }

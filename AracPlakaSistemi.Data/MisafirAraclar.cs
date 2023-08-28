@@ -18,8 +18,8 @@ namespace AracPlakaSistemi.Data
         public string tc_no { get; set; }
         public string plaka { get; set; }
         public string arac_marka { get; set; }
-        public System.DateTime date { get; set; }
         public string Ad { get; set; }
         public string Soyad { get; set; }
+        public string arac_model { get; set; }
     }
 }

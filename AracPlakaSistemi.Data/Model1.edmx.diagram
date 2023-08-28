@@ -5,16 +5,15 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="c5707bbb5ac3460f9f51fd0cb72751f4" Name="Diagram1">
-        <EntityTypeShape EntityType="AracPlakaSistemiModel.GirisKapilari" Width="1.5" PointX="0.75" PointY="5.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="AracPlakaSistemiModel.GirisYapanAraclar" Width="1.5" PointX="3" PointY="4.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="AracPlakaSistemiModel.KaraListeAraclar" Width="1.5" PointX="5.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="AracPlakaSistemiModel.KayitliAraclar" Width="1.5" PointX="0.75" PointY="1" IsExpanded="true" />
         <EntityTypeShape EntityType="AracPlakaSistemiModel.Kisi" Width="1.5" PointX="5.75" PointY="4.75" IsExpanded="true" />
         <EntityTypeShape EntityType="AracPlakaSistemiModel.Kullanici" Width="1.5" PointX="7.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="AracPlakaSistemiModel.MisafirAraclar" Width="1.5" PointX="7.75" PointY="3.75" IsExpanded="true" />
         <EntityTypeShape EntityType="AracPlakaSistemiModel.PlakaGorsel" Width="1.5" PointX="3" PointY="1.25" IsExpanded="true" />
-        <AssociationConnector Association="AracPlakaSistemiModel.FK_GirisYapanAraclar_GirisKapilari" ManuallyRouted="false" />
-        <AssociationConnector Association="AracPlakaSistemiModel.FK_PlakaGorsel_KayitliAraclar" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="AracPlakaSistemiModel.KayitliAraclar" Width="1.5" PointX="0.75" PointY="0.75" />
+        <AssociationConnector Association="AracPlakaSistemiModel.FK_PlakaGorsel_KayitliAraclar" />
+        <EntityTypeShape EntityType="AracPlakaSistemiModel.MisafirAraclar" Width="1.5" PointX="5.375" PointY="7.75" />
+        <EntityTypeShape EntityType="AracPlakaSistemiModel.GirisYapanAraclar" Width="1.5" PointX="3" PointY="4.625" />
+        <EntityTypeShape EntityType="AracPlakaSistemiModel.GirisKapilari" Width="1.5" PointX="0.75" PointY="5.125" />
+        <AssociationConnector Association="AracPlakaSistemiModel.FK_GirisYapanAraclar_GirisKapilari" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -19,31 +19,34 @@ namespace AracPlakaSistemi.Service.Admin
         {
             _context = context;
         }
-        private IQueryable<KaraListeAracListViewModel> _getKaraListeAracListIQueryable(Expression<Func<Data.KaraListeAraclar, bool>> expr)
+        private IQueryable<KaraListeAracListViewModel> _getKaraListeAracListIQueryable(Expression<Func<Data.KayitliAraclar, bool>> expr)
         {
-            return (from b in _context.KaraListeAraclar.AsExpandable().Where(expr)
+            return (from b in _context.KayitliAraclar.AsExpandable().Where(expr)
+                    .Where(x=>x.blacklist.Equals(true))
+                    
+                  
                     select new KaraListeAracListViewModel()
                     {
                         Id = b.Id,
-                         
+                        AdSoyad = b.ad_soyad,
+                        Arac_Marka = b.marka,
+                        Arac_Model = b.model,
+                        
                         Plaka = b.plaka,
-                        AdSoyad = b.Ad + " " + b.Soyad,
-                        Arac_Marka = b.arac_marka,
-                        Tarih = b.date,
-                        tc_no = b.tc_no,
+                        tc_no = b.tc_no
 
 
 
 
                     });
         }
-        public IQueryable<KaraListeAracListViewModel> GetKaraListeAracListIQueryable(KaraListeAracSearchViewModel karaListeAracSearchViewModel)
+        public IQueryable<KaraListeAracListViewModel> GetKaraListeAracListIQueryable(KaraListeAracSearchViewModel kayitliAracSearchViewModel)
         {
-            var predicate = PredicateBuilder.New<Data.KaraListeAraclar>(true);/*AND*/
+            var predicate = PredicateBuilder.New<Data.KayitliAraclar>(true);/*AND*/
 
-            if (!string.IsNullOrWhiteSpace(karaListeAracSearchViewModel.Plaka))
+            if (!string.IsNullOrWhiteSpace(kayitliAracSearchViewModel.Plaka))
             {
-                predicate.And(a => a.plaka.Contains(karaListeAracSearchViewModel.Plaka));
+                predicate.And(a => a.plaka.Contains(kayitliAracSearchViewModel.Plaka));
             }
 
 
@@ -52,7 +55,7 @@ namespace AracPlakaSistemi.Service.Admin
         public async Task<KaraListeAracListViewModel> GetKaraListeAracListViewAsync(long carId)
         {
 
-            var predicate = PredicateBuilder.New<Data.KaraListeAraclar>(true);/*AND*/
+            var predicate = PredicateBuilder.New<Data.KayitliAraclar>(true);/*AND*/
             predicate.And(a => a.Id == carId);
             var arac = await _getKaraListeAracListIQueryable(predicate).SingleOrDefaultAsync().ConfigureAwait(false);
             return arac;
@@ -61,33 +64,11 @@ namespace AracPlakaSistemi.Service.Admin
         {
             var callResult = new ServiceCallResult() { Success = false };
 
-            bool nameExist = await _context.KaraListeAraclar.AnyAsync(a => a.plaka == model.Plaka).ConfigureAwait(false);
-            if (nameExist)
-            {
-                callResult.ErrorMessages.Add("Bu plaka zaten sistemde bulunmaktadır.");
-                return callResult;
-            }
 
-            var arac = new KaraListeAraclar()
-            {
-
-                Ad = model.Ad,
-                Soyad = model.Soyad,
-                arac_marka = model.Arac_Marka,
-                tc_no = model.tc_no,
-                plaka = model.Plaka,
-                date = DateTime.Now
+            var car = await _context.KayitliAraclar.FirstOrDefaultAsync(a => a.Id == model.AracListesi.AracId).ConfigureAwait(false);
+            car.blacklist = true;
 
 
-
-
-            };
-          
-
-
-
-
-            _context.KaraListeAraclar.Add(arac);
             using (var dbtransaction = _context.Database.BeginTransaction())
             {
                 try
@@ -97,7 +78,9 @@ namespace AracPlakaSistemi.Service.Admin
 
 
                     callResult.Success = true;
-                    callResult.Item = await GetKaraListeAracListViewAsync(arac.Id).ConfigureAwait(false);
+
+                    callResult.Item = await GetKaraListeAracListViewAsync(car.Id).ConfigureAwait(false);
+
                     return callResult;
                 }
                 catch (Exception exc)
@@ -110,91 +93,22 @@ namespace AracPlakaSistemi.Service.Admin
 
 
         }
-        public async Task<KaraListeAracEditViewModel> GetAracEditViewModelAsync(int aracId)
-        {
-            var car = await (from p in _context.KaraListeAraclar
-                             where p.Id == aracId
-                             select new KaraListeAracEditViewModel()
-                             {
-                                 Arac_Marka = p.arac_marka,
-                                 Ad = p.Ad,
-                                 Soyad = p.Soyad,
-                                 Plaka = p.plaka,
-                                 Id = p.Id,
-                                 tc_no = p.tc_no,
 
-
-
-                             }).FirstOrDefaultAsync();
-            return car;
-        }
-        public async Task<ServiceCallResult> EditAracAsync(KaraListeAracEditViewModel model)
-        {
-            var callResult = new ServiceCallResult() { Success = false };
-            bool nameExist = await _context.KaraListeAraclar.AnyAsync(a => a.Id != model.Id && a.plaka == model.Plaka).ConfigureAwait(false);
-            if (nameExist)
-            {
-                callResult.ErrorMessages.Add("Bu plaka bulunmaktadır.");
-                return callResult;
-            }
-
-            var arac = await _context.KaraListeAraclar.FirstOrDefaultAsync(a => a.Id == model.Id).ConfigureAwait(false);
-            if (arac == null)
-            {
-                callResult.ErrorMessages.Add("Böyle bir araç bulunamadı.");
-                return callResult;
-            }
-
-
-            arac.tc_no = model.tc_no;
-            arac.plaka = model.Plaka;
-            arac.Ad= model.Ad;
-            arac.arac_marka = model.Arac_Marka;
-            arac.Soyad = model.Soyad;
-           
-                
-
-
-
-
-
-
-
-            using (var dbtransaction = _context.Database.BeginTransaction())
-            {
-                try
-                {
-                    await _context.SaveChangesAsync().ConfigureAwait(false);
-                    dbtransaction.Commit();
-
-
-
-                    callResult.Success = true;
-                    callResult.Item = await GetKaraListeAracListViewAsync(arac.Id).ConfigureAwait(false);
-                    return callResult;
-                }
-                catch (Exception exc)
-                {
-                    callResult.ErrorMessages.Add(exc.GetBaseException().Message);
-                    return callResult;
-                }
-            }
-
-        }
         public async Task<ServiceCallResult> DeleteKaraListeAracAsync(int klAracId)
         {
             var callResult = new ServiceCallResult() { Success = false };
 
 
-            var car = await _context.KaraListeAraclar.FirstOrDefaultAsync(a => a.Id == klAracId).ConfigureAwait(false);
+            var car = await _context.KayitliAraclar.FirstOrDefaultAsync(a => a.Id == klAracId).ConfigureAwait(false);
             if (car == null)
             {
                 callResult.ErrorMessages.Add("Böyle bir araba kaydı bulunamadı.");
                 return callResult;
             }
 
-           
-            _context.KaraListeAraclar.Remove(car);
+            car.blacklist = false;
+
+          
             using (var dbtransaction = _context.Database.BeginTransaction())
             {
                 try
@@ -215,6 +129,19 @@ namespace AracPlakaSistemi.Service.Admin
                 }
             }
         }
-         
+        public List<KaraListeAracListViewModel> GetAracList()
+        {
+
+            var result = _context.KayitliAraclar.Where(x => x.blacklist.Equals(false)).Select(b => new KaraListeAracListViewModel
+            {
+
+                Id = b.Id,
+                Plaka = b.plaka
+
+
+            }).ToList();
+            return result;
+        }
+
     }
 }

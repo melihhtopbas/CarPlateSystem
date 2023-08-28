@@ -1,0 +1,98 @@
+﻿@model AracPlakaSistemi.ViewModels.Admin.AracBilgiSorguViewModel 
+
+<div class="clearfix"></div>
+<br />
+<div class="clearfix"></div>
+<div class="row">
+    <div class="col-xs-12">
+        <div class="alert alert-warning alert-dismissible">
+            <h4><i class="fa-solid fa-circle-info"></i> Bilgilendirme!</h4>
+           
+            <ul>
+                <li>Bilgilerini sorgulamak istediğiniz araç plakasını giriniz!</li>
+            </ul>
+        </div>
+    </div>
+</div>
+<div class="clearfix"></div>
+<br />
+<div class="clearfix"></div>
+<div class="row">
+    @using (Html.BeginForm("AracBilgisiSorgula", "AracBilgi", FormMethod.Post, new { id = "aracBilgiSorguForm", role = "form" }))
+    {
+
+        <div class="row">
+            <div class="col-xs-12">
+                @Html.AntiForgeryToken()
+                @Html.RenderValidationSummary(true)
+            </div>
+        </div>
+        <div class="col-xs-10 col-sm-10 col-md-11 col-lg-11 no-padding">
+
+            
+            <div class="form-group form-group-sm col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                @Html.TextBoxBlockLabelAsAddonFor(m => m.Plaka, new { placeholder = "Araç plakası girin", @class = "show-maxlength", maxlength = "10", autofocus = "true" })
+            </div>
+            <div class="form-group form-group-sm col-xs-12 col-sm-12 col-md-3 col-lg-3">
+                <button style="margin-right:82px;" type="submit" class="btn btn-primary pull-right margin-left10"><span class="fa fa-check"></span>&nbsp;&nbsp;Sorgula</button>
+            </div>
+
+        </div>
+      
+
+    }
+</div>
+
+<div class="clearfix"></div>
+<br />
+<br />
+<br />
+<div class="clearfix"></div>
+<table  class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Araç Sahibi Adı</th>
+            <th>Araç Sahibi TC No</th>
+            <th>Araç Plaka</th>
+            <th>Araç Marka ve Modeli</th>
+            <th>Araç Durumu</th>
+
+
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+
+            <td>@Model.Ad_Soyad</td>
+            <td>@Model.TC_No</td>
+            <td>@Model.Plaka </td>
+            <td>@Model.Arac_Marka  @Model.Arac_Model</td>
+            <td>
+                @Model.AracDurum @if (Model.AracDurum != null && Model.KaraListeMi.Equals(true) && Model.MisafirAracMi.Equals(false))
+                {
+                    <a href="@Url.Action("Index","KaraListeArac", new {plaka = Model.Plaka})">Araca erişmek için tıklayın</a>
+                }
+                else if (Model.AracDurum != null && Model.KaraListeMi.Equals(false) && Model.MisafirAracMi.Equals(false))
+                {
+                    <a href="@Url.Action("Index","KayitliArac", new {plaka = Model.Plaka})">Araca erişmek için tıklayın</a>
+                }
+                else if (Model.AracDurum != null && Model.MisafirAracMi.Equals(true))
+                {
+                    <a href="@Url.Action("Index","MisafirArac", new {plaka = Model.Plaka})">Araca erişmek için tıklayın</a>
+                }
+            </td>
+
+
+
+        </tr>
+
+    </tbody>
+</table> 
+
+<div class="form-group form-group-sm row">
+    <div class="col-xs-12">
+
+        <button class="btn btn-danger pull-right" type="button" data-dismiss="modal"><span class="fa fa-times"></span>&nbsp;&nbsp;İptal</button>
+    </div>
+</div>
+ 

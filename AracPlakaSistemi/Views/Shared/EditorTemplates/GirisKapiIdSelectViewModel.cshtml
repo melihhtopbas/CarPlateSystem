@@ -1,0 +1,21 @@
+﻿
+
+@model AracPlakaSistemi.ViewModels.Admin.GirisKapiIdSelectViewModel
+@{
+    var categoryList = new SelectList((List<AracPlakaSistemi.ViewModels.Admin.GirisKapilariListViewModel>)ViewData["GirisKapisiListesi"], "Id", "KapiAdres").ToList();
+    categoryList.Add(new SelectListItem()
+    {
+        Value = string.Empty,
+        Text = "Giriş Kapısı Seçiniz"
+    });
+}
+<div class="form-group form-group-sm col-xs-12 col-sm-12 col-md-12 col-lg-12  ">
+    <div class="input-group input-group-sm">
+        <span class="input-group-addon as-label required">
+            <strong> @Html.DisplayNameFor(m => m.KapiId)</strong>
+        </span>
+
+        @Html.DropDownListFor(a => a.KapiId, categoryList.OrderBy(a => a.Value), new { @class = "form-control" })
+    </div>
+    @Html.ValidationMessageFor(m => m.KapiId, "", new { @class = "text-danger" })
+</div>

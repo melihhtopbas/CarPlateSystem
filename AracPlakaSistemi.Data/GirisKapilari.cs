@@ -22,7 +22,7 @@ namespace AracPlakaSistemi.Data
     
         public int Id { get; set; }
         public string camera_adres { get; set; }
-        public string camera_ip { get; set; }
+        public bool active { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<GirisYapanAraclar> GirisYapanAraclar { get; set; }

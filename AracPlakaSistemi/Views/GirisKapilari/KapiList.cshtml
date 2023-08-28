@@ -1,0 +1,73 @@
+﻿@model IPagedList<AracPlakaSistemi.ViewModels.Admin.GirisKapilariListViewModel>
+ 
+ 
+<div class="products-list-tools clearfix">
+
+    
+        <a class="btn btn-primary btn-sm"
+           data-modal-form="true"
+           data-modal-size="modal-lg"
+           data-modal-prepend="tbody#KapiList"
+           data-modal-title="Araç Ekle"
+           data-hook-beforeunload="true"
+            data-modal-save-message="Giriş Kapısı eklendi"
+           href="@Url.Action("Add", "GirisKapilari")">
+            <i class="fa fa-plus"></i>Giriş Kapısı Ekle
+        </a>
+   
+
+
+
+
+    <div class="pull-right hidden-xs hidden-sm">
+        @if (Model.Any())
+        {
+            <div style="margin: 20px 0; float: left !important;">
+                @((Model.PageIndex * Model.PageSize) + 1)-@((Model.PageIndex * Model.PageSize) + Model.Count())/@Model.TotalItemCount
+            </div>
+        }
+
+        &nbsp;
+        @Html.Pager(Model.PageSize, Model.PageNumber, Model.TotalItemCount, new AjaxOptions { UpdateTargetId = "GirisKapilariListContainer" }).Options(o => o
+            .Action("KapiList")
+            .DisplayTemplate("BootstrapPage")
+            .MaxNrOfPages(6)
+            .AlwaysAddFirstPageNumber()  
+            )
+    </div>
+</div>
+<table class="table table-bordered">
+    <thead>
+        <tr>
+
+            <th>Kapı Adı</th>
+            <th>Aktif mi?</th>
+            <th style="width:50px">Düzenle</th>
+            <th style="width:50px">Sil</th>
+        </tr>
+    </thead>
+    <tbody id="KapiList">
+        @Html.DisplayFor(m => m)
+
+
+    </tbody>
+
+</table>
+<div class="pull-left">
+
+    @Html.Pager(Model.PageSize, Model.PageNumber, Model.TotalItemCount, new AjaxOptions { UpdateTargetId = "GirisKapilariListContainer" }).Options(o => o
+        .Action("KapiList")
+        .DisplayTemplate("BootstrapPage")
+        .MaxNrOfPages(6)
+        .AlwaysAddFirstPageNumber()
+       
+
+        )
+</div>
+@if (Model.Any())
+{
+    <div style="margin: 20px 0; float: left !important;">
+        @((Model.PageIndex * Model.PageSize) + 1)-@((Model.PageIndex * Model.PageSize) + Model.Count())/@Model.TotalItemCount
+    </div>
+}
+

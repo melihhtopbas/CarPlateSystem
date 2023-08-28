@@ -1,0 +1,21 @@
+﻿
+ 
+@model AracPlakaSistemi.ViewModels.Admin.KaraListeAracIdSelectViewModel
+@{
+    var categoryList = new SelectList((List<AracPlakaSistemi.ViewModels.Admin.KaraListeAracListViewModel>)ViewData["AracListesi"], "Id", "Plaka").ToList();
+    categoryList.Add(new SelectListItem()
+    {
+        Value = string.Empty,
+        Text = "Plaka Seçiniz"
+    });
+}
+<div class="form-group form-group-sm col-xs-12 col-sm-12 col-md-12 col-lg-12  ">
+    <div class="input-group input-group-sm">
+        <span class="input-group-addon as-label required">
+            <strong> @Html.DisplayNameFor(m => m.AracId)</strong>
+        </span>
+
+        @Html.DropDownListFor(a => a.AracId, categoryList.OrderBy(a => a.Value), new { @class = "form-control" })
+    </div>
+    @Html.ValidationMessageFor(m => m.AracId, "", new { @class = "text-danger" })
+</div>

@@ -3,9 +3,9 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Plaka Bilgi Sistemi</title>
+
     <link rel="shortcut icon" href="~/Content/images/indir.png" type="image/x-icon" />
-  
+
     @Styles.Render("~/Content/css")
     <link href="~/Content/style.css" rel="stylesheet" />
     <link href="~/Content/loadingoverlay.css" rel="stylesheet" />
@@ -161,6 +161,8 @@
             </div>
         </nav>
     </header>
+
+
     <script>
         function toggleFullScreen(elem) {
             // ## The below if statement seems to work better ## if ((document.fullScreenElement && document.fullScreenElement !== null) || (document.msfullscreenElement && document.msfullscreenElement !== null) || (!document.mozFullScreen && !document.webkitIsFullScreen)) {
@@ -193,7 +195,7 @@
         }
 
     </script>
-
+ 
     <!-- =============================================== -->
     <!-- Left side column. contains the sidebar -->
     <aside class="main-sidebar">
@@ -207,13 +209,13 @@
 
 
 
-                <li><a href="#"><i class="fa-solid fa-home"></i> <span>Anasayfa</span></a></li>
-                <li><a href="#"><i class="fa-solid fa-video"></i><span> En Son Giren Araçlar</span></a></li>
-                <li><a href="@Url.Action("Index","KayitliArac")"><i class="fa-solid fa-car"></i><span> Kayıtlı Araçlar</span></a></li>
-                <li><a href="#"><i class="fa-solid fa-camera"></i> <span>Kamera Listesi</span></a></li>
-                <li><a href="#"><i class="fa-solid fa-users"></i> <span>Misafir Araç Kayıt</span></a></li>
-                <li><a href="@Url.Action("Index","KaraListeArac")"><i class="fa-solid fa-book"></i> <span>Kara Liste Araç Kayıt</span></a></li>
-                <li><a href="#"><i class="fa-solid fa-magnifying-glass"></i> <span>Araç Bilgi Sorgulama</span></a></li>
+                <li class="@Html.ActivePage("KayitliArac","Index")"><a href="@Url.Action("Index","KayitliArac")"><i class="fa-solid fa-home"></i> <span>Anasayfa</span></a></li>
+                <li class="@Html.ActivePage("GirisYapanArac","Index")"><a href="@Url.Action("Index","GirisYapanArac")"><i class="fa-solid fa-video"></i><span> En Son Giren Araçlar</span></a></li>
+                <li class="@Html.ActivePage("KayitliArac","Index")"><a href="@Url.Action("Index","KayitliArac")"><i class="fa-solid fa-car"></i><span> Kayıtlı Araçlar</span></a></li>
+                <li class="@Html.ActivePage("GirisKapilari","Index")"><a href="@Url.Action("Index","GirisKapilari")"><i class="fa-solid fa-camera"></i> <span>Kamera Listesi</span></a></li>
+                <li class="@Html.ActivePage("MisafirArac","Index")"> <a href="@Url.Action("Index","MisafirArac")"><i class="fa-solid fa-users"></i> <span>Misafir Araç Kayıt</span></a></li>
+                <li class="@Html.ActivePage("KaraListeArac","Index")"><a href="@Url.Action("Index","KaraListeArac")"><i class="fa-solid fa-book"></i> <span>Kara Liste Araç Kayıt</span></a></li>
+                <li class="@Html.ActivePage("AracBilgi","Index")"><a href="@Url.Action("Index","AracBilgi")"><i class="fa-solid fa-magnifying-glass"></i> <span>Araç Bilgi Sorgulama</span></a></li>
 
 
 
@@ -290,7 +292,7 @@
 
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
-      
+
         function myFunction() {
             document.getElementById("openDropDown").classList.toggle("open");
             document.getElementById("new-messages-notifications-menu").classList.toggle("open");
@@ -325,10 +327,108 @@
 
             $('#kayitliAracSearchForm').submit();
             $('#karaListeAracSearchForm').submit();
-           
+            $('#misafirAracSearchForm').submit();
+            $('#girisYapanAracSearchForm').submit();
+            $('#girisKapilariSearchForm').submit();
+
+            $("#KaraListeAracListContainer").on("click", ".deleteBlackListCar", function () {
+                gelenID = new Object();
+                gelenID.ID = $(this).attr("data-id");
+                var btn = $(this);
+
+                Swal.fire({
+
+                    title: 'Emin misiniz?',
+                    text: "Sildikten sonra geri alamayacaksınız!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#23a928',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Evet, sil <i class="fa fa-thumbs-up"></i>',
+                    cancelButtonText: 'İptal <i class="fa fa-thumbs-down"></i>',
+
+                }).then((result) => {
+                    if (result.isConfirmed) {
+
+                        $.ajax({
+                            type: "POST",
+                            url: "/KaraListeArac/Delete/" + gelenID.ID,
+
+                        }).done(function (result) {
+                            if (result.success) {
+                                btn.parent().parent().remove();
+                                Swal.fire({
+                                    position: 'center',
+                                    icon: 'success',
+                                    title: 'İşlem başarıyla tamamlandı',
+                                    showConfirmButton: false,
+                                    timer: 1500,
+
+                                });
+                            }
+                        });
 
 
-            
+
+
+
+                    }
+                })
+
+
+
+            });
+
+            $("#MisafirAracListContainer").on("click", ".deleteAndSaveMisafirArac", function () {
+                gelenID = new Object();
+                gelenID.ID = $(this).attr("data-id");
+                var btn = $(this);
+
+                Swal.fire({
+
+                    title: 'Emin misiniz?',
+                    text: "Araç misafir araç listesinden silinecektir!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#23a928',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Evet, sil <i class="fa fa-thumbs-up"></i>',
+                    cancelButtonText: 'İptal <i class="fa fa-thumbs-down"></i>',
+
+                }).then((result) => {
+                    if (result.isConfirmed) {
+
+                        $.ajax({
+                            type: "POST",
+                            url: "/MisafirArac/AracKaydıYap/" + gelenID.ID,
+
+                        }).done(function (result) {
+                            if (result.success) {
+                                btn.parent().parent().remove();
+                                Swal.fire({
+                                    position: 'center',
+                                    icon: 'success',
+                                    title: 'Araç kaydı başarıyla tamamlandı',
+                                    showConfirmButton: false,
+                                    timer: 1500,
+
+                                });
+                            }
+                        });
+
+
+
+
+
+                    }
+                })
+
+
+
+            });
+
+
+
 
         });
         function deleteKayitliArac() {
@@ -413,10 +513,140 @@
                 container.find(overlay).remove();
             });
         };
+        function deleteMisafirArac() {
+            var that = $(this);
+            var id = that.data('id');
+
+            var container = $('#MisafirAracListContainer');
+            //The overlay
+            var overlay = $("<div class='loader-wrapper'><div class='loadingOverlay'></div></div>");
+
+            container.append(overlay);
+
+            $.ajax({
+                url: '/MisafirArac/delete',
+                dataType: 'json',
+                type: "POST",
+                cache: false,
+                data: { id: id }
+            }).done(function (result) {
+                container.find(overlay).remove();
+                if (result.success) {
+                    var $tr = that.closest('tr.master-row');
+                    $tr.nextUntil('tr.master-row').empty().remove();
+                    $tr.animateDelete();
+
+                    $.each(result.successMessages,
+                        function (i, item) {
+                            toastr.success(item);
+                        });
+                    $.each(result.warningMessages,
+                        function (i, item) {
+                            toastr.success(item);
+                        });
+                } else {
+                    $.each(result.errorMessages,
+                        function (i, item) {
+                            toastr.error(item);
+                        });
+                }
+            }).fail(function () {
+                container.find(overlay).remove();
+            });
+        };
+        function deleteGirisYapanArac() {
+            var that = $(this);
+            var aracId = that.data('aracId');
+
+            var container = $('#GirisYapanAracListContainer');
+            //The overlay
+            var overlay = $("<div class='loader-wrapper'><div class='loadingOverlay'></div></div>");
+
+            container.append(overlay);
+
+            $.ajax({
+                url: '/GirisYapanArac/delete',
+                dataType: 'json',
+                type: "POST",
+                cache: false,
+                data: { aracId: aracId }
+            }).done(function (result) {
+                container.find(overlay).remove();
+                if (result.success) {
+                    var $tr = that.closest('tr.master-row');
+                    $tr.nextUntil('tr.master-row').empty().remove();
+                    $tr.animateDelete();
+
+                    $.each(result.successMessages,
+                        function (i, item) {
+                            toastr.success(item);
+                        });
+                    $.each(result.warningMessages,
+                        function (i, item) {
+                            toastr.success(item);
+                        });
+                } else {
+                    $.each(result.errorMessages,
+                        function (i, item) {
+                            toastr.error(item);
+                        });
+                }
+            }).fail(function () {
+                container.find(overlay).remove();
+            });
+        };
+        function deleteGirisKapisi() {
+            var that = $(this);
+            var kapiId = that.data('kapiId');
+
+            var container = $('#GirisKapilariListContainer');
+            //The overlay
+            var overlay = $("<div class='loader-wrapper'><div class='loadingOverlay'></div></div>");
+
+            container.append(overlay);
+
+            $.ajax({
+                url: '/GirisKapilari/delete',
+                dataType: 'json',
+                type: "POST",
+                cache: false,
+                data: { kapiId: kapiId }
+            }).done(function (result) {
+                container.find(overlay).remove();
+                if (result.success) {
+                    var $tr = that.closest('tr.master-row');
+                    $tr.nextUntil('tr.master-row').empty().remove();
+                    $tr.animateDelete();
+
+                    $.each(result.successMessages,
+                        function (i, item) {
+                            toastr.success(item);
+                        });
+                    $.each(result.warningMessages,
+                        function (i, item) {
+                            toastr.success(item);
+                        });
+                } else {
+                    $.each(result.errorMessages,
+                        function (i, item) {
+                            toastr.error(item);
+                        });
+                }
+            }).fail(function () {
+                container.find(overlay).remove();
+            });
+        };
 
     </script>
 
+    <style>
 
+        .required::after {
+            content: "*";
+            font-weight: bold;
+            color: red;
+        }
+    </style>
 
 
 

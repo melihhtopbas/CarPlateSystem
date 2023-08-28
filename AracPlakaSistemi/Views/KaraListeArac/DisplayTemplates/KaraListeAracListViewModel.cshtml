@@ -7,32 +7,14 @@
         @Model.Plaka
     </td>
     <td>@Model.Arac_Marka</td>
-  
-   
-    <td style="width:50px">
-        <a data-modal-form="true"
-           data-modal-size="modal-lg"
-           data-modal-update="#klarac_@Model.Id"
-           data-modal-highlight="#klarac_@Model.Id"
-           data-modal-title="Araç Düzenle"
-           data-hook-beforeunload="true"
-           class="btn btn-block btn-success btn-sm"
-           href="@Url.Action("Edit", "KaraListeArac", routeValues: new {carId=Model.Id})">
-            <i class="fa fa-edit fa-fw text-success"></i> Araç Kaydı Düzenle
-        </a>
+    <td>@Model.Arac_Model</td>
 
-    </td>
-    <td style="width:50px">
-        <a href="javascript:void(0);"
-           data-toggle="confirmation"
-           title="Emin Misiniz"
-           data-btn-ok-label="Evet"
-           data-btn-cancel-label="Hayır"
-           data-placement="top"
-           data-kl-arac-id="@Model.Id"
-           data-on-confirm="deleteKaraListeArac"
-           class="btn btn-block btn-danger btn-sm">
-            <i class="fa fa-trash fa-fw text-danger"></i> Araç Kaydı Sil
+
+
+    <td>
+        <a data-id="@Model.Id"
+           class="deleteBlackListCar btn btn-block btn-danger btn-sm">
+            <i class="fa fa-trash fa-fw text-danger"></i> Sil
         </a>
 
     </td>

@@ -10,7 +10,13 @@ namespace AracPlakaSistemi.ViewModels.Admin
 {
     public class MisafirAracViewModel
     {
-        public int Id { get; set; }
+    
+    }
+    public class MisafirAracCrudBaseViewModel
+    {
+
+
+       
         [Display(Name = "TC Kimlik No")]
         [Required(ErrorMessage = "Lütfen giriniz")]
         public string TC_No { get; set; }
@@ -19,12 +25,43 @@ namespace AracPlakaSistemi.ViewModels.Admin
         public string Plaka { get; set; }
         [Display(Name = "Araç Markası")]
         [Required(ErrorMessage = "Lütfen giriniz")]
-        public string Arac_Marka{ get; set; }
+        public string Arac_Marka { get; set; }
+        [Display(Name = "Araç Modeli")]
+        [Required(ErrorMessage = "Lütfen giriniz")]
+        public string Arac_Model { get; set; }
         [Display(Name = "Araç Sahibi Adı")]
         [Required(ErrorMessage = "Lütfen giriniz")]
         public string Ad { get; set; }
         [Display(Name = "Araç Sahibi Soyadı")]
         [Required(ErrorMessage = "Lütfen giriniz")]
         public string Soyad { get; set; }
+    }
+    public class MisafirAracAddViewModel : MisafirAracCrudBaseViewModel
+    {
+
+    }
+    public class MisafirAracEditViewModel : MisafirAracCrudBaseViewModel
+    {
+        public int Id { get; set; }
+        
+    }
+    public class MisafirAracListViewModel
+    {
+        public int Id { get; set; }
+        public string Plaka { get; set; }
+
+        public string Arac_Marka { get; set; }
+
+        public string Arac_Model { get; set; }
+
+        public string Ad { get; set; }
+        
+
+
+
+    }
+    public class MisafirAracSearchViewModel
+    {
+        public string Plaka { get; set; }
     }
 }

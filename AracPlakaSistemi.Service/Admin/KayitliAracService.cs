@@ -22,13 +22,17 @@ namespace AracPlakaSistemi.Service.Admin
         private IQueryable<KayitliAracListViewModel> _getKayitliAracListIQueryable(Expression<Func<Data.KayitliAraclar, bool>> expr)
         {
             return (from b in _context.KayitliAraclar.AsExpandable().Where(expr)
+                    
                     select new KayitliAracListViewModel()
                     {
                         Id = b.Id,
                         Ad = b.ad_soyad,
                         Arac_Marka = b.marka,
                         Arac_Model = b.model,
-                        Plaka = b.plaka
+                        Plaka = b.plaka,
+                        blacklist = b.blacklist,
+                         
+                        
 
 
 
@@ -64,6 +68,12 @@ namespace AracPlakaSistemi.Service.Admin
                 callResult.ErrorMessages.Add("Bu plaka zaten sistemde bulunmaktadır.");
                 return callResult;
             }
+            bool plakaExist = await _context.MisafirAraclar.AnyAsync(x => x.plaka == model.Plaka).ConfigureAwait(false);
+            if (plakaExist)
+            {
+                callResult.WarningMessages.Add("Bu plaka misafir bir araca aittir. Lütfen Misafir Araçlar sekmesinden aracı kayıt ettiriniz.");
+                return callResult;
+            }
 
             var arac = new KayitliAraclar()
             {
@@ -73,15 +83,20 @@ namespace AracPlakaSistemi.Service.Admin
                 marka = model.Arac_Marka,
                 plaka = model.Plaka,
                 tc_no = model.Tc_No,
+               
+                datetime = DateTime.Now,
+                
 
 
 
 
             };
+            
             arac.PlakaGorsel.Add(new PlakaGorsel
             {
                 PathName =  model.FileName,
             });
+           
             
 
 
@@ -112,6 +127,8 @@ namespace AracPlakaSistemi.Service.Admin
         public async Task<KayitliAracAEditViewModel> GetAracEditViewModelAsync(int aracId)
         {
             var car = await (from p in _context.KayitliAraclar
+                             
+                                
                                  where p.Id == aracId
                                  select new KayitliAracAEditViewModel()
                                  {
@@ -120,8 +137,9 @@ namespace AracPlakaSistemi.Service.Admin
                                      Arac_Model = p.model,
                                      Plaka = p.plaka,
                                      Id = p.Id,
-                                     
+                                     BlackList = p.blacklist,
                                      Tc_No = p.tc_no,
+                                     Date = p.datetime,
 
 
                                  }).FirstOrDefaultAsync();
@@ -150,6 +168,9 @@ namespace AracPlakaSistemi.Service.Admin
             arac.ad_soyad = model.Ad;
             arac.model = model.Arac_Model;
             arac.marka = model.Arac_Marka;
+            arac.blacklist = model.BlackList;
+            
+             
             
 
 
@@ -195,6 +216,7 @@ namespace AracPlakaSistemi.Service.Admin
             {
                 _context.PlakaGorsel.Remove(item);
             }
+            
 
             _context.KayitliAraclar.Remove(car);
             using (var dbtransaction = _context.Database.BeginTransaction())

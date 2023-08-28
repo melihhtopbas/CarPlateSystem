@@ -20,16 +20,19 @@ namespace AracPlakaSistemi.Controllers
     public class KaraListeAracController : AdminBaseController
     {
         private readonly KaraListeAracService _karaListeAracService;
+        private readonly KayitliAracService _kayitliAracService;
 
-        public KaraListeAracController(KaraListeAracService karaListeAracService)
+        public KaraListeAracController(KaraListeAracService karaListeAracService, KayitliAracService kayitliAracService)
         {
             _karaListeAracService = karaListeAracService;
+            _kayitliAracService = kayitliAracService;
         }
 
-        public ActionResult Index()
+        public ActionResult Index(string plaka)
         {
+
             ViewBag.Title = "Kara Liste Araçlar";
-            return View("~/Views/KaraListeArac/Index.cshtml");
+            return View("~/Views/KaraListeArac/Index.cshtml", new KaraListeAracSearchViewModel { Plaka = plaka});
         }
         [AjaxOnly, HttpPost, ValidateInput(false)]
 
@@ -42,7 +45,7 @@ namespace AracPlakaSistemi.Controllers
             var currentPageIndex = page - 1 ?? 0;
 
             var result = _karaListeAracService.GetKaraListeAracListIQueryable(model)
-                .OrderBy(p => p.Tarih)
+                .OrderBy(p => p.Plaka)
                 .ToPagedList(currentPageIndex, SystemConstants.DefaultCarPageSize);
 
 
@@ -66,7 +69,7 @@ namespace AracPlakaSistemi.Controllers
         {
 
 
-
+            ViewData["AracListesi"] = _karaListeAracService.GetAracList().ToList();
             var model = new KaraListeAracAddViewModel
             {
 
@@ -111,59 +114,11 @@ namespace AracPlakaSistemi.Controllers
                 });
 
         }
-        public async Task<ActionResult> Edit(int carId)
+
+        [HttpPost]
+        public async Task<ActionResult> Delete(int id)
         {
-
-            var model = await _karaListeAracService.GetAracEditViewModelAsync(carId);
-            if (model != null)
-            {
-
-                return PartialView("~/Views/KaraListeArac/_AracDuzenle.cshtml", model);
-            }
-            return PartialView("~/Views/Shared/_ItemNotFoundPartial.cshtml", "Araç sistemde bulunamadı!");
-        }
-        [HttpPost, ValidateInput(false), ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit(KaraListeAracEditViewModel model)
-        {
-
-            if (ModelState.IsValid)
-            {
-                var callResult = await _karaListeAracService.EditAracAsync(model);
-                if (callResult.Success)
-                {
-
-                    ModelState.Clear();
-                    var viewModel = (KaraListeAracListViewModel)callResult.Item;
-
-
-                    var jsonResult = Json(
-                        new
-                        {
-                            success = true,
-                            responseText = RenderPartialViewToString("~/Views/KaraListeArac/DisplayTemplates/KaraListeAracListViewModel.cshtml", viewModel),
-                            item = viewModel
-                        });
-                    jsonResult.MaxJsonLength = int.MaxValue;
-                    return jsonResult;
-                }
-                foreach (var error in callResult.ErrorMessages)
-                {
-                    ModelState.AddModelError("", error);
-                }
-            }
-
-            return Json(
-                new
-                {
-                    success = false,
-                    responseText = RenderPartialViewToString("~/Views/KaraListeArac/_AracDuzenle.cshtml", model)
-                });
-
-        }
-        [AjaxOnly, HttpPost]
-        public async Task<ActionResult> Delete(int klAracId)
-        {
-            var callResult = await _karaListeAracService.DeleteKaraListeAracAsync(klAracId);
+            var callResult = await _karaListeAracService.DeleteKaraListeAracAsync(id);
             if (callResult.Success)
             {
 

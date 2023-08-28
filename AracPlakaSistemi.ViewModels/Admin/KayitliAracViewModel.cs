@@ -37,6 +37,7 @@ namespace AracPlakaSistemi.ViewModels.Admin
         [Required(ErrorMessage = "Lütfen giriniz")]
 
         public string Tc_No { get; set; }
+        public DateTime Date { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public  IEnumerable<PlakaGorselViewModel> PlakaGorselViewModels { get; set; }
@@ -48,6 +49,7 @@ namespace AracPlakaSistemi.ViewModels.Admin
     public class KayitliAracAEditViewModel : KayitliAracCrudBaseViewModel
     {
         public int Id { get; set; }
+        public bool BlackList { get; set; }
     }
     public class KayitliAracListViewModel
     {
@@ -59,9 +61,10 @@ namespace AracPlakaSistemi.ViewModels.Admin
         public string Arac_Model { get; set; }
        
         public string Ad { get; set; }
-      
-        
-        
+        public bool blacklist { get; set; }
+
+
+
     }
     public class KayitliAracSearchViewModel
     {

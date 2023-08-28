@@ -29,10 +29,10 @@ namespace AracPlakaSistemi.Controllers
                 _kayitliAracService = kayitliAracService;
         }
         
-        public ActionResult Index()
+        public ActionResult Index(string plaka)
         {
             ViewBag.Title = "Kayıtlı Araçlar";
-            return View("~/Views/KayitliArac/Index.cshtml");
+            return View("~/Views/KayitliArac/Index.cshtml", new KayitliAracSearchViewModel { Plaka = plaka});
         }
         [AjaxOnly, HttpPost, ValidateInput(false)]
 
@@ -127,6 +127,10 @@ namespace AracPlakaSistemi.Controllers
                 {
                     ModelState.AddModelError("", error);
                 }
+                foreach (var item in callResult.WarningMessages)
+                {
+                    ModelState.AddModelError("", item);
+                }
             }
 
             return Json(
@@ -219,6 +223,10 @@ namespace AracPlakaSistemi.Controllers
 
 
             var plaka = await _kayitliAracService.GetKayitliAracPlaka(carId);
+            if (plaka.PathName == null)
+            {
+                return PartialView("~/Views/Shared/_ItemNotFoundPartial.cshtml", "Araç plaka resmi eklenmedi!");
+            }
             
             return PartialView("~/Views/KayitliArac/_AracPlaka.cshtml", plaka);
 
